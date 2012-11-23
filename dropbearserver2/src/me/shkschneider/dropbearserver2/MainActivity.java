@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Window;
-import com.stericson.RootTools.RootTools;
-
-import me.shkschneider.dropbearserver2.MyDialog.MyDialogCallback;
 
 public class MainActivity extends SherlockActivity implements OnClickListener {
 
@@ -32,44 +28,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 
 		mStop = (Button) findViewById(R.id.stop);
 		mStop.setOnClickListener(this);
-
-		((TextView) findViewById(R.id.status)).setText("OK");
-	}
-
-	@Override
-	protected void onResume() {
-		setProgressBarIndeterminateVisibility(true);
-
-		if (RootTools.isRootAvailable() == false) {
-			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root is not available").setCallback(new MyDialogCallback() {
-
-				@Override
-				public void onMyDialogCallback(int choice) {
-					finish();
-				}
-			}).show();
-		}
-		if (RootTools.isAccessGiven() == false) {
-			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root access denied").setCallback(new MyDialogCallback() {
-
-				@Override
-				public void onMyDialogCallback(int choice) {
-					finish();
-				}
-			}).show();
-		}
-		if (RootTools.isBusyboxAvailable() == false) {
-			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Busybox is not available").setCallback(new MyDialogCallback() {
-
-				@Override
-				public void onMyDialogCallback(int choice) {
-					finish();
-				}
-			}).show();
-		}
-		setProgressBarIndeterminateVisibility(false);
-
-		super.onResume();
 	}
 
 	@Override
