@@ -4,7 +4,7 @@
  * javadb <http://www.javadb.com/remove-a-line-from-a-text-file>
  * external-ip <http://code.google.com/p/external-ip/>
  */
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,6 +23,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.http.conn.util.InetAddressUtils;
+
 
 import android.content.Context;
 

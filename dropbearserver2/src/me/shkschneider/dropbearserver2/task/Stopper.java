@@ -1,11 +1,16 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.task;
+
+import me.shkschneider.dropbearserver2.MainService;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public class ServerStopper extends AsyncTask<Void, String, Boolean> {
+public class Stopper extends AsyncTask<Void, String, Boolean> {
 
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
@@ -13,11 +18,11 @@ public class ServerStopper extends AsyncTask<Void, String, Boolean> {
 
 	private ServerStopperCallback<Boolean> mCallback;
 
-	public ServerStopper(Context context, ServerStopperCallback<Boolean> callback) {
+	public Stopper(Context context, ServerStopperCallback<Boolean> callback) {
 		this(context, callback, false);
 	}
 
-	public ServerStopper(Context context, ServerStopperCallback<Boolean> callback, boolean startInBackground) {
+	public Stopper(Context context, ServerStopperCallback<Boolean> callback, boolean startInBackground) {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;

@@ -1,4 +1,6 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.ui;
+
+import me.shkschneider.dropbearserver2.MainApplication;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,14 +1,19 @@
 /*
  * Pawel Nadolski <http://stackoverflow.com/questions/10319471/android-is-the-groupid-of-sdcard-rw-always-1015/>
  */
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.task;
+
+import me.shkschneider.dropbearserver2.MainService;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-public class ServerStarter extends AsyncTask<Void, String, Boolean> {
+public class Starter extends AsyncTask<Void, String, Boolean> {
 
 	private static final int ID_ROOT = 0;
 	private static final int UID_SHELL = 2000;
@@ -20,11 +25,11 @@ public class ServerStarter extends AsyncTask<Void, String, Boolean> {
 
 	private ServerStarterCallback<Boolean> mCallback;
 
-	public ServerStarter(Context context, ServerStarterCallback<Boolean> callback) {
+	public Starter(Context context, ServerStarterCallback<Boolean> callback) {
 		this(context, callback, false);
 	}
 
-	public ServerStarter(Context context, ServerStarterCallback<Boolean> callback, boolean startInBackground) {
+	public Starter(Context context, ServerStarterCallback<Boolean> callback, boolean startInBackground) {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;

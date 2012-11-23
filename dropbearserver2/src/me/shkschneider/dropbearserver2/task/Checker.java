@@ -1,4 +1,6 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.task;
+
+import me.shkschneider.dropbearserver2.util.RootUtils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

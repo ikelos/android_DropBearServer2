@@ -1,10 +1,11 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.util;
 
 import java.io.File;
 
 import android.content.Context;
 
 import com.stericson.RootTools.RootTools;
+
 
 public abstract class RootUtils {
 

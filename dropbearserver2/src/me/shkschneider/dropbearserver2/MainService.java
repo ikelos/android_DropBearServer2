@@ -1,5 +1,10 @@
 package me.shkschneider.dropbearserver2;
 
+import me.shkschneider.dropbearserver2.task.Starter;
+import me.shkschneider.dropbearserver2.task.Stopper;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -43,7 +48,7 @@ public class MainService extends MainIntentService {
 
 	private void startServerInBackground(Context context) {
 		L.d("Processing");
-		ServerStarter serverStarter = new ServerStarter(context, null, true);
+		Starter serverStarter = new Starter(context, null, true);
 		serverStarter.execute();
 	}
 
@@ -67,7 +72,7 @@ public class MainService extends MainIntentService {
 
 	private void stopServerInBackground(Context context) {
 		L.d("Processing");
-		ServerStopper serverStopper = new ServerStopper(context, null, true);
+		Stopper serverStopper = new Stopper(context, null, true);
 		serverStopper.execute();
 	}
 

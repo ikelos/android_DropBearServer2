@@ -1,4 +1,4 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.util;
 
 import android.util.Log;
 

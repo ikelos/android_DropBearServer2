@@ -1,12 +1,13 @@
 /*
  * Muzikant <http://muzikant-android.blogspot.fr/2011/02/how-to-get-root-access-and-execute.html>
  */
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.util;
 
 import java.io.File;
 
 import com.stericson.RootTools.CommandCapture;
 import com.stericson.RootTools.RootTools;
+
 
 public abstract class ShellUtils {
 

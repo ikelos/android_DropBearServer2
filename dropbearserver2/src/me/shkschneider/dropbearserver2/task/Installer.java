@@ -1,4 +1,4 @@
-package me.shkschneider.dropbearserver2;
+package me.shkschneider.dropbearserver2.task;
 
 import java.io.File;
 
@@ -6,14 +6,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-public class DropbearInstaller extends AsyncTask<Void, String, Boolean> {
+import me.shkschneider.dropbearserver2.R;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
+import me.shkschneider.dropbearserver2.util.Utils;
+
+public class Installer extends AsyncTask<Void, String, Boolean> {
 
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
 
 	private DropbearInstallerCallback<Boolean> mCallback;
 
-	public DropbearInstaller(Context context, DropbearInstallerCallback<Boolean> callback) {
+	public Installer(Context context, DropbearInstallerCallback<Boolean> callback) {
 		mContext = context;
 		mCallback = callback;
 		if (mContext != null) {

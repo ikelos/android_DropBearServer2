@@ -11,6 +11,7 @@ import com.actionbarsherlock.view.Window;
 
 public class MainActivity extends SherlockActivity implements OnClickListener {
 
+	private Button mCheck = null;
 	private Button mStart = null;
 	private Button mStop = null;
 
@@ -23,6 +24,9 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
+		mCheck = (Button) findViewById(R.id.check);
+		mCheck.setOnClickListener(this);
+
 		mStart = (Button) findViewById(R.id.start);
 		mStart.setOnClickListener(this);
 
@@ -32,7 +36,10 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		if (view == mStart) {
+		if (view == mCheck) {
+			// ...
+		}
+		else if (view == mStart) {
 			// ...
 		}
 		else if (view == mStop) {
