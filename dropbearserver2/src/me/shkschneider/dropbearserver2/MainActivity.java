@@ -1,20 +1,23 @@
 package me.shkschneider.dropbearserver2;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View;
 
-public class MainActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-    }
+public class MainActivity extends SherlockActivity {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
 }
