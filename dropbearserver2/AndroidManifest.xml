@@ -24,6 +24,7 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:name="me.shkschneider.dropbearserver2.MainApplication"
         android:theme="@style/Theme.Sherlock" >
         <activity
             android:label="@string/app_name"

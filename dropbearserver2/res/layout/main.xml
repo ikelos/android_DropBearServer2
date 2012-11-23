@@ -6,8 +6,20 @@
     android:padding="20dip" >
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/status"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Stop" />
 
 </LinearLayout>
