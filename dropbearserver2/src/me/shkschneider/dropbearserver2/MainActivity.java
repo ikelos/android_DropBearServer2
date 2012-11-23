@@ -38,6 +38,8 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 
 	@Override
 	protected void onResume() {
+		setProgressBarIndeterminateVisibility(true);
+
 		if (RootTools.isRootAvailable() == false) {
 			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root is not available").setCallback(new MyDialogCallback() {
 
@@ -65,6 +67,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 				}
 			}).show();
 		}
+		setProgressBarIndeterminateVisibility(false);
 
 		super.onResume();
 	}
