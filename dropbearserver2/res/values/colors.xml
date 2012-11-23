@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Content -->
+    <color name="transparent">#AA000000</color>
+    <color name="text_color">@android:color/white</color>
+
+    <!-- Button -->
+    <color name="btn_background">#FF2D2D2D</color>
+
+    <!-- Android Design -->
+    <color name="blue_light">#FF33B5E5</color>
+    <color name="blue_dark">#FF0099CC</color>
+    <color name="purple_light">#FFAA66CC</color>
+    <color name="purple_dark">#FF9933CC</color>
+    <color name="green_light">#FF99CC00</color>
+    <color name="green_dark">#FF669900</color>
+    <color name="orange_light">#FFFFBB33</color>
+    <color name="orange_dark">#FFFF8800</color>
+    <color name="red_light">#FFFF4444</color>
+    <color name="red_dark">#FFCC0000</color>
+
+    <!-- Menu (References) -->
+    <color name="menu_dark_enable">#33333333</color>
+    <color name="menu_dark_disable">#99333333</color>
+    <color name="menu_light_enable">#33FFFFFF</color>
+    <color name="menu_light_disable">#99FFFFFF</color>
+
+</resources>
