@@ -12,12 +12,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -69,8 +72,11 @@ public abstract class ServerUtils {
 					ipAddresses.add(line);
 				}
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			catch (SocketException e) {
+				L.e("SocketException: " + e.getMessage());
+			}
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 			}
 			return ipAddresses;
 		}
@@ -98,8 +104,12 @@ public abstract class ServerUtils {
 					}
 				}
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			catch (FileNotFoundException e) {
+				L.e("FileNotFoundException: " + e.getMessage());
+				return -1;
+			}
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 				return -1;
 			}
 		}
@@ -130,8 +140,8 @@ public abstract class ServerUtils {
 			// parsing
 			return (output.size() >= 2);
 		}
-		catch (Exception e) {
-			L.e(e.getMessage());
+		catch (IOException e) {
+			L.e("IOException: " + e.getMessage());
 		}
 		return false;
 	}
@@ -161,8 +171,11 @@ public abstract class ServerUtils {
 				}
 				dis.close();
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			catch (FileNotFoundException e) {
+				L.e("FileNotFoundException: " + e.getMessage());
+			}
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 			}
 		}
 		else {
@@ -195,8 +208,11 @@ public abstract class ServerUtils {
 				}
 				dis.close();
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			catch (FileNotFoundException e) {
+				L.e("FileNotFoundException: " + e.getMessage());
+			}
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 			}
 		}
 		else {
@@ -215,8 +231,8 @@ public abstract class ServerUtils {
 				out.close();
 				return true;
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 			}
 		}
 		return false;
@@ -254,8 +270,11 @@ public abstract class ServerUtils {
 				}
 				return true;
 			}
-			catch (Exception e) {
-				L.d("Exception: " + e.getMessage());
+			catch (FileNotFoundException e) {
+				L.d("FileNotFoundException: " + e.getMessage());
+			}
+			catch (IOException e) {
+				L.d("IOException: " + e.getMessage());
 			}
 		}
 		return false;
@@ -268,8 +287,8 @@ public abstract class ServerUtils {
 				file.createNewFile();
 				return true;
 			}
-			catch (Exception e) {
-				L.d("Exception: " + e.getMessage());
+			catch (IOException e) {
+				L.e("IOException: " + e.getMessage());
 			}
 		}
 		return false;
@@ -300,8 +319,8 @@ public abstract class ServerUtils {
 						version = line.replaceFirst("^Dropbear sshd v", "");
 					}
 				}
-				catch (Exception e) {
-					L.e("Exception: " + e.getMessage());
+				catch (IOException e) {
+					L.e("IOException: " + e.getMessage());
 				}
 			}
 		}

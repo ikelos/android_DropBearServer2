@@ -15,16 +15,11 @@ public abstract class RootUtils {
 	public static final Boolean checkRootAccess() {
 		hasRootAccess = false;
 		if (RootTools.isRootAvailable()) {
-			try {
-				if (RootTools.isAccessGiven()) {
-					hasRootAccess = true;
-				}
-				else {
-					L.w("access rejected");
-				}
+			if (RootTools.isAccessGiven()) {
+				hasRootAccess = true;
 			}
-			catch (Exception e) {
-				L.e("Exception: " + e.getMessage());
+			else {
+				L.w("access rejected");
 			}
 		}
 		else {

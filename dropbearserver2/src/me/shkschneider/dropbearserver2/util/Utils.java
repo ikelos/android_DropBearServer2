@@ -4,7 +4,9 @@
 package me.shkschneider.dropbearserver2.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -34,11 +36,15 @@ public abstract class Utils {
 			in.close();
 			out.flush();
 			out.close();
-		} catch(Exception e) {
-			L.e(e.getMessage());
-			return false;
+			return true;
 		}
-		return true;
+		catch(FileNotFoundException e) {
+			L.e("FileNotFoundException: " + e.getMessage());
+		}
+		catch(IOException e) {
+			L.e("IOException: " + e.getMessage());
+		}
+		return false;
 	}
 
 	public static final Boolean remountReadWrite(String path) {

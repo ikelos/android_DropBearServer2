@@ -4,6 +4,8 @@
 package me.shkschneider.dropbearserver2.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 import com.stericson.RootTools.CommandCapture;
 import com.stericson.RootTools.RootTools;
@@ -16,9 +18,14 @@ public abstract class ShellUtils {
 		try {
 			RootTools.getShell(true).add(commands).waitForFinish();
 		}
-		catch (Exception e) {
-			L.e("Exception: " + e.getMessage());
-			return false;
+		catch (InterruptedException e) {
+			L.e("InterruptedException: " + e.getMessage());
+		}
+		catch (IOException e) {
+			L.e("IOException: " + e.getMessage());
+		}
+		catch (TimeoutException e) {
+			L.e("TimeoutException: " + e.getMessage());
 		}
 		return true;
 	}

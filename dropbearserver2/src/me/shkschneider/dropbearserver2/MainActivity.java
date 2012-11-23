@@ -82,6 +82,8 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		});
 
 		stdout("Application started");
+
+		check();
 	}
 
 	@Override
@@ -138,12 +140,21 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		}
 	}
 
+	private void check() {
+		setProgressBarIndeterminateVisibility(true);
+		stdout("Checking root access");
+		if (RootUtils.checkRootAccess() == true) {
+			stdout("Checking busybox");
+			if (RootUtils.checkBusybox() == true) {
+				stdout("Checking dropbear");
+				RootUtils.checkDropbear(this);
+			}
+		}
+		setProgressBarIndeterminateVisibility(false);
+	}
+
 	private void status() {
 		setProgressBarIndeterminateVisibility(true);
-
-		RootUtils.checkRootAccess();
-		RootUtils.checkBusybox();
-		RootUtils.checkDropbear(this);
 
 		if (RootUtils.hasDropbear == false) {
 			mStatus = STATUS_NOT_INSTALLED;

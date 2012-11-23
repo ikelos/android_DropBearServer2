@@ -8,6 +8,7 @@ import android.widget.Toast;
 import me.shkschneider.dropbearserver2.task.Callback;
 import me.shkschneider.dropbearserver2.task.Starter;
 import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.RootUtils;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
 
@@ -22,18 +23,29 @@ public class MainReceiver extends BroadcastReceiver {
 		L.d("Starting server");
 		Toast.makeText(context, "DropBearServer: Starting server", Toast.LENGTH_LONG).show();
 
-		new Starter(context, new Callback<Boolean>() {
+		if (RootUtils.checkRootAccess() == false) {
+			L.e("checkRootAccess() = false");
+		}
+		else if (RootUtils.checkBusybox() == false) {
+			L.e("checkBusybox() = false");
+		}
+		else if (RootUtils.checkDropbear(context) == false) {
+			L.e("checkDropbear() = false");
+		}
+		else {
+			new Starter(context, new Callback<Boolean>() {
 
-			@Override
-			public void onTaskComplete(int id, Boolean result) {
-				L.d("Result: " + false);
-				if (result == true) {
-					Toast.makeText(context, "DropBearServer: Server started", Toast.LENGTH_LONG).show();
+				@Override
+				public void onTaskComplete(int id, Boolean result) {
+					L.d("Result: " + false);
+					if (result == true) {
+						Toast.makeText(context, "DropBearServer: Server started", Toast.LENGTH_LONG).show();
+					}
+					else {
+						Toast.makeText(context, "DropBearServer: Server failure", Toast.LENGTH_LONG).show();
+					}
 				}
-				else {
-					Toast.makeText(context, "DropBearServer: Server failure", Toast.LENGTH_LONG).show();
-				}
-			}
-		}, true).execute();
+			}, true).execute();
+		}
 	}
 }
