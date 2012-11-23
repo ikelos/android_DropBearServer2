@@ -16,6 +16,7 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 	public Checker(Context context, Callback<Boolean> callback) {
 		mContext = context;
 		mCallback = callback;
+
 		if (mContext != null) {
 			mProgressDialog = new ProgressDialog(mContext);
 			mProgressDialog.setTitle("Checking dependencies");
@@ -70,8 +71,9 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 		if (mProgressDialog != null) {
 			mProgressDialog.dismiss();
 		}
+
 		if (mCallback != null) {
-			mCallback.onTaskComplete(result);
+			mCallback.onTaskComplete(Callback.TASK_CHECK, result);
 		}
 	}
 }

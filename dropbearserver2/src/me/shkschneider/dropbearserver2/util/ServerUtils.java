@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
-
 import android.content.Context;
 
 public abstract class ServerUtils {
@@ -71,7 +70,7 @@ public abstract class ServerUtils {
 				}
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 			}
 			return ipAddresses;
 		}
@@ -94,13 +93,13 @@ public abstract class ServerUtils {
 						return lock;
 					}
 					catch (Exception e) {
-						L.e(e.getMessage());
+						L.e("Exception: " + e.getMessage());
 						return -1;
 					}
 				}
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 				return -1;
 			}
 		}
@@ -163,7 +162,7 @@ public abstract class ServerUtils {
 				dis.close();
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 			}
 		}
 		else {
@@ -197,7 +196,7 @@ public abstract class ServerUtils {
 				dis.close();
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 			}
 		}
 		else {
@@ -217,7 +216,7 @@ public abstract class ServerUtils {
 				return true;
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 			}
 		}
 		return false;
@@ -256,7 +255,7 @@ public abstract class ServerUtils {
 				return true;
 			}
 			catch (Exception e) {
-				L.d(e.getMessage());
+				L.d("Exception: " + e.getMessage());
 			}
 		}
 		return false;
@@ -270,7 +269,7 @@ public abstract class ServerUtils {
 				return true;
 			}
 			catch (Exception e) {
-				L.d(e.getMessage());
+				L.d("Exception: " + e.getMessage());
 			}
 		}
 		return false;
@@ -302,11 +301,10 @@ public abstract class ServerUtils {
 					}
 				}
 				catch (Exception e) {
-					L.e(e.getMessage());
+					L.e("Exception: " + e.getMessage());
 				}
 			}
 		}
 		return version;
 	}
-
 }

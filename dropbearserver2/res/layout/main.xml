@@ -3,7 +3,7 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:orientation="vertical"
-    android:padding="20dip" >
+    android:padding="20dp" >
 
     <Button
         android:id="@+id/install"
@@ -34,5 +34,18 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Remove" />
+
+    <TextView
+        android:layout_height="20dp"
+        android:layout_width="fill_parent"
+        android:text="@null" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:text="@null" />
 
 </LinearLayout>

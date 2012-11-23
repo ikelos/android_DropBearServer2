@@ -26,6 +26,7 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
+
 		if (mContext != null && !mStartInBackground) {
 			mProgressDialog = new ProgressDialog(mContext);
 			mProgressDialog.setTitle("Stopping server");
@@ -74,9 +75,11 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 		if (mProgressDialog != null && !mStartInBackground) {
 			mProgressDialog.dismiss();
 		}
+
 		if (mCallback != null) {
-			mCallback.onTaskComplete(result);
-		} else {
+			mCallback.onTaskComplete(Callback.TASK_STOP, result);
+		}
+		else {
 			Intent intent = new Intent(MainService.ACTION_SERVER_STOPPED);
 			intent.putExtra(MainService.EXTRA_IS_SUCCESS, result);
 			mContext.sendBroadcast(intent);

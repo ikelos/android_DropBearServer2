@@ -33,6 +33,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
+
 		if (mContext != null && !mStartInBackground) {
 			mProgressDialog = new ProgressDialog(mContext);
 			mProgressDialog.setTitle("Starting server");
@@ -101,11 +102,12 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		if (mProgressDialog != null && !mStartInBackground) {
 			mProgressDialog.dismiss();
 		}
+
 		if (result == true) {
 			ShellUtils.echoToFile("0" + android.os.Process.myPid(), ServerUtils.getLocalDir(mContext) + "/lock");
 		}
 		if (mCallback != null) {
-			mCallback.onTaskComplete(result);
+			mCallback.onTaskComplete(Callback.TASK_START, result);
 		}
 		else {
 			Intent intent = new Intent(MainService.ACTION_SERVER_STARTED);
