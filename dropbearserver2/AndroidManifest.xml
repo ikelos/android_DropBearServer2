@@ -9,7 +9,25 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="16" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <permission
+        android:description="@null"
+        android:name="me.shkschneider.dropbearserver2.START_SERVER"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:description="@null"
+        android:name="me.shkschneider.dropbearserver2.SERVER_STARTED"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:description="@null"
+        android:name="me.shkschneider.dropbearserver2.STOP_SERVER"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:description="@null"
+        android:name="me.shkschneider.dropbearserver2.SERVER_STOPPED"
+        android:protectionLevel="dangerous" />
 
     <uses-feature
         android:name="android.hardware.screen.portrait"
@@ -26,7 +44,7 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name="me.shkschneider.dropbearserver2.MainApplication"
+        android:name=".MainApplication"
         android:theme="@style/Theme.Sherlock" >
         <activity
             android:label="@string/app_name"
@@ -37,6 +55,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".MainService" />
+
+        <receiver
+            android:name=".MainReceiver"
+            android:permission="me.shkschneider.dropbearserver.START_SERVER" >
+            <intent-filter>
+                <action android:name="me.shkschneider.dropbearserver.START_SERVER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".MainReceiver"
+            android:permission="me.shkschneider.dropbearserver.SERVER_STARTED" >
+            <intent-filter>
+                <action android:name="me.shkschneider.dropbearserver.SERVER_STARTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".MainReceiver"
+            android:permission="me.shkschneider.dropbearserver.STOP_SERVER" >
+            <intent-filter>
+                <action android:name="me.shkschneider.dropbearserver.STOP_SERVER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".MainReceiver"
+            android:permission="me.shkschneider.dropbearserver.SERVER_STOPPED" >
+            <intent-filter>
+                <action android:name="me.shkschneider.dropbearserver.SERVER_STOPPED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

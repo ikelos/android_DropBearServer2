@@ -1,7 +1,6 @@
 package me.shkschneider.dropbearserver2;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -11,7 +10,8 @@ import com.stericson.RootTools.RootTools;
 
 public class MainApplication extends Application {
 
-	public static Context CONTEXT = null;
+	public static Integer LOCK = 0;
+
 	public static String ANDROID_VERSION = null;
 	public static Integer ANDROID_API = 0;
 	public static String APP_PACKAGE = null;
@@ -21,8 +21,6 @@ public class MainApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		CONTEXT = getApplicationContext();
 
 		ANDROID_VERSION = Build.VERSION.RELEASE;
 		ANDROID_API = Build.VERSION.SDK_INT;
