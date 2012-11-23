@@ -5,6 +5,19 @@
     android:orientation="vertical"
     android:padding="20dp" >
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/label"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@null"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_height="20dp"
+        android:layout_width="fill_parent"
+        android:text="@null" />
+
     <Button
         android:id="@+id/install"
         android:layout_height="wrap_content"

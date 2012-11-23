@@ -28,7 +28,7 @@ public class MainApplication extends Application {
 		ANDROID_API = Build.VERSION.SDK_INT;
 
 		APP_PACKAGE = getPackageName();
-		APP_NAME = getResources().getString(R.string.app_name);
+		APP_NAME = "DropBearServer II";
 		APP_VERSION = "0";
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(APP_PACKAGE, PackageManager.GET_META_DATA);

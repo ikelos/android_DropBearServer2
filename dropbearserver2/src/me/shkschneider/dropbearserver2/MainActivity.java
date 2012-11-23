@@ -32,6 +32,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 	private static final int STATUS_STOPPED = 4;
 	private int mStatus = STATUS_UNKNOWN;
 
+	private TextView mLabel = null;
 	private Button mInstall = null;
 	private Button mCheck = null;
 	private Button mStart = null;
@@ -47,6 +48,9 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		setProgressBarIndeterminateVisibility(false);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
+
+		mLabel = (TextView) findViewById(R.id.label);
+		mLabel.setText(MainApplication.APP_NAME + "\n" + "v" + MainApplication.APP_VERSION);
 
 		mInstall = (Button) findViewById(R.id.install);
 		mInstall.setOnClickListener(this);
