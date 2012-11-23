@@ -159,7 +159,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		}
 		else if (ServerUtils.isDropbearRunning() == true) {
 			mStatus = STATUS_STARTED;
-			stdout("Status: Started (PID: ~" + ServerUtils.getServerLock(this) + ")");
+			stdout("Status: Started (PID: " + ServerUtils.getServerLock(this) + ")");
 		}
 		else {
 			mStatus = STATUS_STOPPED;

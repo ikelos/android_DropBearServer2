@@ -17,8 +17,7 @@ public abstract class ShellUtils {
 			RootTools.getShell(true).add(commands).waitForFinish();
 		}
 		catch (Exception e) {
-			L.e(e.getMessage());
-			e.printStackTrace();
+			L.e("Exception: " + e.getMessage());
 			return false;
 		}
 		return true;
@@ -96,115 +95,6 @@ public abstract class ShellUtils {
 		return RootTools.remount(path, "RO");
 	}
 
-	/*
-	public static final Boolean wget(String urlStr, String localName) {
-        BufferedInputStream bis = null;
-
-        try {
-            URL url = new URL(urlStr);
-
-            URLConnection urlCon = url.openConnection();
-            bis = new BufferedInputStream(urlCon.getInputStream());
-
-            ByteArrayBuffer baf = new ByteArrayBuffer(50);
-            int current = 0;
-            while (((current = bis.read()) != -1)) {
-                baf.append((byte) current);
-                if (isCancelled()) {
-                    return false;
-                }
-            }
-            bis.close();
-
-            if (isCancelled()) {
-                return false;
-            } else {
-                FileOutputStream outFileStream = getActivity().openFileOutput(localName, 0);
-                outFileStream.write(baf.toByteArray());
-                outFileStream.close();
-                if (localName.equals("busybox")) {
-                    mBusyboxPath = getActivity().getFilesDir().getAbsolutePath().concat("/busybox");
-                }
-            }
-
-        } catch (MalformedURLException e) {
-            Log.e(TAG, "Bad URL: " + urlStr, e);
-            return false;
-        } catch (IOException e) {
-            Log.e(TAG, "Problem downloading file: " + localName, e);
-            return false;
-        }
-        return true;
-    }
-
-	public static final String md5sum(String s) {
-	    try {
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
-
-	        StringBuffer hexString = new StringBuffer();
-	        for (int i = 0; i < messageDigest.length; i++) {
-	            String h = Integer.toHexString(0xFF & messageDigest[i]);
-	            while (h.length() < 2)
-	                h = "0" + h;
-	            hexString.append(h);
-	        }
-	        return hexString.toString();
-
-	    }
-	    catch (Exception e) {
-	        Log.e(TAG, e.getMessage());
-	    }
-	    return "";
-	}
-
-	public static Boolean md5chk(String path, String md5sum) {
-        if (mBusyboxPath == null) {
-            Log.e(TAG, "Busybox not present");
-            return false;
-        }
-
-        Process process = null;
-        try {
-            process = Runtime.getRuntime().exec(new String[] { mBusyboxPath, "md5sum", path});
-            BufferedReader is = new BufferedReader(new InputStreamReader(new DataInputStream(process.getInputStream())), 64);
-            BufferedReader es = new BufferedReader(new InputStreamReader(new DataInputStream(process.getErrorStream())), 64);
-            for (int i = 0; i < 200; i++) {
-                if (is.ready())
-                	break;
-                try {
-                    Thread.sleep(5);
-                }
-                catch (InterruptedException e) {
-                    Log.e(TAG, "md5chk(): sleep timer got interrupted");
-                }
-            }
-            String inLine = null;
-            if (es.ready()) {
-                inLine = es.readLine();
-                Log.i(TAG, inLine);
-            }
-            if (is.ready()) {
-                inLine = is.readLine();
-            }
-            else {
-                Log.e(TAG, "md5chk(): could not check md5sum");
-                return false;
-            }
-            process.destroy();
-            if (!inLine.split(" ")[0].equals(md5sum)) {
-                Log.e(TAG, "md5chk(): checksum mismatch");
-                return false;
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "md5chk(): checking of md5sum failed", e);
-            return false;
-        }
-        return true;
-    }
-	 */
-
 	public static String which(String binaryName) {
 		String path = System.getenv("PATH");
 		for (String s : path.split(File.pathSeparator)) {
@@ -215,5 +105,4 @@ public abstract class ShellUtils {
 		}
 		return null;
 	}
-
 }

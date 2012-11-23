@@ -6,7 +6,6 @@ import android.content.Context;
 
 import com.stericson.RootTools.RootTools;
 
-
 public abstract class RootUtils {
 
 	public static Boolean hasRootAccess = false;
@@ -25,7 +24,7 @@ public abstract class RootUtils {
 				}
 			}
 			catch (Exception e) {
-				L.e(e.getMessage());
+				L.e("Exception: " + e.getMessage());
 			}
 		}
 		else {

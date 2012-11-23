@@ -2,10 +2,8 @@ package me.shkschneider.dropbearserver2.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 
-import me.shkschneider.dropbearserver2.MainService;
 import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
@@ -78,11 +76,6 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 
 		if (mCallback != null) {
 			mCallback.onTaskComplete(Callback.TASK_STOP, result);
-		}
-		else {
-			Intent intent = new Intent(MainService.ACTION_SERVER_STOPPED);
-			intent.putExtra(MainService.EXTRA_IS_SUCCESS, result);
-			mContext.sendBroadcast(intent);
 		}
 	}
 }

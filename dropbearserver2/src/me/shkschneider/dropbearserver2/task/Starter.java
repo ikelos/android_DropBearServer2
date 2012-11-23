@@ -5,10 +5,8 @@ package me.shkschneider.dropbearserver2.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 
-import me.shkschneider.dropbearserver2.MainService;
 import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
@@ -55,7 +53,6 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 
 	private Boolean falseWithError(String error) {
 		L.d(error);
-		//Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_LONG).show();
 		return false;
 	}
 
@@ -108,11 +105,6 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		}
 		if (mCallback != null) {
 			mCallback.onTaskComplete(Callback.TASK_START, result);
-		}
-		else {
-			Intent intent = new Intent(MainService.ACTION_SERVER_STARTED);
-			intent.putExtra(MainService.EXTRA_IS_SUCCESS, result);
-			mContext.sendBroadcast(intent);
 		}
 	}
 }
