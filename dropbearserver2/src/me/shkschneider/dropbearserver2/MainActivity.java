@@ -50,7 +50,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		setContentView(R.layout.main);
 
 		mLabel = (TextView) findViewById(R.id.label);
-		mLabel.setText(MainApplication.APP_NAME + "\n" + "v" + MainApplication.APP_VERSION);
+		mLabel.setText(MainApplication.APP_NAME + "\n" + "v" + MainApplication.APP_VERSION + "/" + ServerUtils.getDropbearVersion(this));
 
 		mInstall = (Button) findViewById(R.id.install);
 		mInstall.setOnClickListener(this);

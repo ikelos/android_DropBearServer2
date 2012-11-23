@@ -3,13 +3,11 @@
  */
 package me.shkschneider.dropbearserver2.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import com.stericson.RootTools.CommandCapture;
 import com.stericson.RootTools.RootTools;
-
 
 public abstract class ShellUtils {
 
@@ -100,16 +98,5 @@ public abstract class ShellUtils {
 
 	public static final Boolean remountReadOnly(String path) {
 		return RootTools.remount(path, "RO");
-	}
-
-	public static String which(String binaryName) {
-		String path = System.getenv("PATH");
-		for (String s : path.split(File.pathSeparator)) {
-			File file = new File(s, binaryName);
-			if (file.exists()) {
-				return file.getAbsolutePath();
-			}
-		}
-		return null;
 	}
 }

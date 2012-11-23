@@ -84,39 +84,6 @@ public abstract class ServerUtils {
 	}
 
 	// WARNING: this is not threaded
-	public static final Integer getServerLock(Context context) {
-		File f = new File(ServerUtils.getLocalDir(context) + "/lock");
-		if (f.exists() == true && f.isFile() == true) {
-			try {
-				FileInputStream fis = new FileInputStream(f.getAbsolutePath());
-				DataInputStream dis = new DataInputStream(fis);
-				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-				String line = br.readLine();
-				dis.close();
-				if (line != null) {
-					try {
-						Integer lock = Integer.parseInt(line);
-						return lock;
-					}
-					catch (Exception e) {
-						L.e("Exception: " + e.getMessage());
-						return -1;
-					}
-				}
-			}
-			catch (FileNotFoundException e) {
-				L.e("FileNotFoundException: " + e.getMessage());
-				return -1;
-			}
-			catch (IOException e) {
-				L.e("IOException: " + e.getMessage());
-				return -1;
-			}
-		}
-		return 0;
-	}
-
-	// WARNING: this is not threaded
 	public static final Boolean isDropbearRunning() {
 		try {
 			Process suProcess = Runtime.getRuntime().exec("su");
@@ -156,43 +123,6 @@ public abstract class ServerUtils {
 	// WARNING: this is not threaded
 	public static final Boolean generateDssPrivateKey(String path) {
 		return ShellUtils.execute(ServerUtils.getLocalDir(null) + "/dropbearkey -t dss -f " + path);
-	}
-
-	// WARNING: this is not threaded
-	public static String getBanner(String path) {
-		String banner = "";
-		File f = new File(path);
-		if (f.exists() == true && f.isFile() == true) {
-			try {
-				FileInputStream fis = new FileInputStream(path);
-				DataInputStream dis = new DataInputStream(fis);
-				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					banner = banner.concat(line);
-				}
-				dis.close();
-			}
-			catch (FileNotFoundException e) {
-				L.e("FileNotFoundException: " + e.getMessage());
-			}
-			catch (IOException e) {
-				L.e("IOException: " + e.getMessage());
-			}
-		}
-		else {
-			L.w("File could not be found: " + path);
-		}
-		return banner;
-	}
-
-	// WARNING: this is not threaded
-	public static Boolean setBanner(String banner, String path) {
-		File f = new File(path);
-		if (f.exists() == true && f.isFile() == true) {
-			return ShellUtils.echoToFile(banner, path);
-		}
-		return false;
 	}
 
 	// WARNING: this is not threaded
@@ -297,34 +227,30 @@ public abstract class ServerUtils {
 	}
 
 	// WARNING: this is not threaded
-	public static final String getDropbearVersion() {
+	public static final String getDropbearVersion(Context context) {
 		String version = null;
-		if (RootUtils.hasBusybox == true) {
-			if (RootUtils.hasDropbear == true) {
-				try {
-					Process suProcess = Runtime.getRuntime().exec("su");
+		try {
+			Process suProcess = Runtime.getRuntime().exec("su");
 
-					// stdin
-					DataOutputStream stdin = new DataOutputStream(suProcess.getOutputStream());
-					L.d("# dropbear -h");
-					stdin.writeBytes(ServerUtils.getLocalDir(null) + "/dropbear -h 2>&1 | busybox head -1\n");
-					stdin.flush();
-					stdin.writeBytes("exit\n");
-					stdin.flush();
+			// stdin
+			DataOutputStream stdin = new DataOutputStream(suProcess.getOutputStream());
+			L.d("# dropbear -h");
+			stdin.writeBytes(ServerUtils.getLocalDir(context) + "/dropbear -h 2>&1 | busybox head -1\n");
+			stdin.flush();
+			stdin.writeBytes("exit\n");
+			stdin.flush();
 
-					// stdout
-					BufferedReader reader = new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
-					String line = reader.readLine();
+			// stdout
+			BufferedReader reader = new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
+			String line = reader.readLine();
 
-					// parsing
-					if (line != null && line.matches("^Dropbear sshd v[0-9\\.]+$")) {
-						version = line.replaceFirst("^Dropbear sshd v", "");
-					}
-				}
-				catch (IOException e) {
-					L.e("IOException: " + e.getMessage());
-				}
+			// parsing
+			if (line != null && line.matches("^Dropbear sshd v[0-9\\.]+$")) {
+				version = line.replaceFirst("^Dropbear sshd v", "");
 			}
+		}
+		catch (IOException e) {
+			L.e("IOException: " + e.getMessage());
 		}
 		return version;
 	}

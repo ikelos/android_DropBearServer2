@@ -11,18 +11,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
-import android.widget.Toast;
 
 import com.stericson.RootTools.RootTools;
 
 public abstract class Utils {
-
-	public static void marketNotFound(Context context) {
-		Toast.makeText(context, "Error: Google Play could not be found", Toast.LENGTH_LONG).show();
-	}
 
 	public static final Boolean copyRawFile(Context context, int rawId, String path) {
 		try {
@@ -55,20 +48,6 @@ public abstract class Utils {
 		return RootTools.remount(path, "RO");
 	}
 
-	public static Boolean isConnectedToWiFi(Context context) {
-		ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-		return netInfo.isConnected();
-	}
-
-	public static Boolean isNumeric(String string) {
-		if (string.matches("^[0-9]+$")) {
-			return true;
-		}
-		return false;
-	}
-
 	public static Boolean hasStorage(Boolean requireWriteAccess) {
 		String state = Environment.getExternalStorageState();
 
@@ -81,5 +60,4 @@ public abstract class Utils {
 
 		return false;
 	}
-
 }
