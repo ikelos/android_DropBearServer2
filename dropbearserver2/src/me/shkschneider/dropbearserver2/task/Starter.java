@@ -3,15 +3,15 @@
  */
 package me.shkschneider.dropbearserver2.task;
 
-import me.shkschneider.dropbearserver2.MainService;
-import me.shkschneider.dropbearserver2.util.L;
-import me.shkschneider.dropbearserver2.util.ServerUtils;
-import me.shkschneider.dropbearserver2.util.ShellUtils;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+
+import me.shkschneider.dropbearserver2.MainService;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
 
 public class Starter extends AsyncTask<Void, String, Boolean> {
 
@@ -23,13 +23,13 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 	private ProgressDialog mProgressDialog = null;
 	private boolean mStartInBackground = false;
 
-	private ServerStarterCallback<Boolean> mCallback;
+	private Callback<Boolean> mCallback;
 
-	public Starter(Context context, ServerStarterCallback<Boolean> callback) {
+	public Starter(Context context, Callback<Boolean> callback) {
 		this(context, callback, false);
 	}
 
-	public Starter(Context context, ServerStarterCallback<Boolean> callback, boolean startInBackground) {
+	public Starter(Context context, Callback<Boolean> callback, boolean startInBackground) {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
@@ -105,17 +105,12 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 			ShellUtils.echoToFile("0" + android.os.Process.myPid(), ServerUtils.getLocalDir(mContext) + "/lock");
 		}
 		if (mCallback != null) {
-			mCallback.onServerStarterComplete(result);
+			mCallback.onTaskComplete(result);
 		}
 		else {
 			Intent intent = new Intent(MainService.ACTION_SERVER_STARTED);
 			intent.putExtra(MainService.EXTRA_IS_SUCCESS, result);
 			mContext.sendBroadcast(intent);
 		}
-	}
-
-	public interface ServerStarterCallback<T> {
-
-		public void onServerStarterComplete(T result);
 	}
 }

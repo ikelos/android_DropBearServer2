@@ -1,21 +1,21 @@
 package me.shkschneider.dropbearserver2.task;
 
-import me.shkschneider.dropbearserver2.MainApplication;
-import me.shkschneider.dropbearserver2.util.ServerUtils;
-import me.shkschneider.dropbearserver2.util.ShellUtils;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import me.shkschneider.dropbearserver2.MainApplication;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
 
 public class Remover extends AsyncTask<Void, String, Boolean> {
 
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
 
-	private DropbearRemoverCallback<Boolean> mCallback;
+	private Callback<Boolean> mCallback;
 
-	public Remover(Context context, DropbearRemoverCallback<Boolean> callback) {
+	public Remover(Context context, Callback<Boolean> callback) {
 		mContext = context;
 		mCallback = callback;
 		if (mContext != null) {
@@ -117,12 +117,7 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.dismiss();
 		}
 		if (mCallback != null) {
-			mCallback.onDropbearRemoverComplete(result);
+			mCallback.onTaskComplete(result);
 		}
-	}
-
-	public interface DropbearRemoverCallback<T> {
-
-		public void onDropbearRemoverComplete(T result);
 	}
 }

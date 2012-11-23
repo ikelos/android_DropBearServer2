@@ -17,9 +17,9 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
 
-	private DropbearInstallerCallback<Boolean> mCallback;
+	private Callback<Boolean> mCallback;
 
-	public Installer(Context context, DropbearInstallerCallback<Boolean> callback) {
+	public Installer(Context context, Callback<Boolean> callback) {
 		mContext = context;
 		mCallback = callback;
 		if (mContext != null) {
@@ -265,12 +265,7 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.dismiss();
 		}
 		if (mCallback != null) {
-			mCallback.onDropbearInstallerComplete(result);
+			mCallback.onTaskComplete(result);
 		}
-	}
-
-	public interface DropbearInstallerCallback<T> {
-
-		public void onDropbearInstallerComplete(T result);
 	}
 }

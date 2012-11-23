@@ -6,6 +6,12 @@
     android:padding="20dip" >
 
     <Button
+        android:id="@+id/install"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Install" />
+
+    <Button
         android:id="@+id/check"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -22,5 +28,11 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Stop" />
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Remove" />
 
 </LinearLayout>

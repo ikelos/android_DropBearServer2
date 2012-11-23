@@ -1,19 +1,19 @@
 package me.shkschneider.dropbearserver2.task;
 
-import me.shkschneider.dropbearserver2.util.RootUtils;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import me.shkschneider.dropbearserver2.util.RootUtils;
 
 public class Checker extends AsyncTask<Void, String, Boolean> {
 
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
 
-	private CheckerCallback<Boolean> mCallback;
+	private Callback<Boolean> mCallback;
 
-	public Checker(Context context, CheckerCallback<Boolean> callback) {
+	public Checker(Context context, Callback<Boolean> callback) {
 		mContext = context;
 		mCallback = callback;
 		if (mContext != null) {
@@ -71,12 +71,7 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.dismiss();
 		}
 		if (mCallback != null) {
-			mCallback.onCheckerComplete(result);
+			mCallback.onTaskComplete(result);
 		}
-	}
-
-	public interface CheckerCallback<T> {
-
-		public void onCheckerComplete(T result);
 	}
 }

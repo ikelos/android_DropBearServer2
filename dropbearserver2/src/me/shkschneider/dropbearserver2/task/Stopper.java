@@ -1,14 +1,14 @@
 package me.shkschneider.dropbearserver2.task;
 
-import me.shkschneider.dropbearserver2.MainService;
-import me.shkschneider.dropbearserver2.util.L;
-import me.shkschneider.dropbearserver2.util.ServerUtils;
-import me.shkschneider.dropbearserver2.util.ShellUtils;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+
+import me.shkschneider.dropbearserver2.MainService;
+import me.shkschneider.dropbearserver2.util.L;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
+import me.shkschneider.dropbearserver2.util.ShellUtils;
 
 public class Stopper extends AsyncTask<Void, String, Boolean> {
 
@@ -16,13 +16,13 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 	private ProgressDialog mProgressDialog = null;
 	private boolean mStartInBackground = false;
 
-	private ServerStopperCallback<Boolean> mCallback;
+	private Callback<Boolean> mCallback;
 
-	public Stopper(Context context, ServerStopperCallback<Boolean> callback) {
+	public Stopper(Context context, Callback<Boolean> callback) {
 		this(context, callback, false);
 	}
 
-	public Stopper(Context context, ServerStopperCallback<Boolean> callback, boolean startInBackground) {
+	public Stopper(Context context, Callback<Boolean> callback, boolean startInBackground) {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
@@ -75,16 +75,11 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.dismiss();
 		}
 		if (mCallback != null) {
-			mCallback.onServerStopperComplete(result);
+			mCallback.onTaskComplete(result);
 		} else {
 			Intent intent = new Intent(MainService.ACTION_SERVER_STOPPED);
 			intent.putExtra(MainService.EXTRA_IS_SUCCESS, result);
 			mContext.sendBroadcast(intent);
 		}
-	}
-
-	public interface ServerStopperCallback<T> {
-
-		public void onServerStopperComplete(T result);
 	}
 }
