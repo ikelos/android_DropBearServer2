@@ -38,33 +38,26 @@ public class MainActivity extends SherlockActivity implements OnClickListener {
 
 	@Override
 	protected void onResume() {
-		if (RootTools.isRootAvailable() == true) {
-			if (RootTools.isAccessGiven() == true) {
-				if (RootTools.isBusyboxAvailable() == true) {
-					// All good
-				}
-				else {
-					new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Busybox is not available").setCallback(new MyDialogCallback() {
-
-						@Override
-						public void onMyDialogCallback(int choice) {
-							finish();
-						}
-					}).show();
-				}
-			}
-			else {
-				new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root access denied").setCallback(new MyDialogCallback() {
-
-					@Override
-					public void onMyDialogCallback(int choice) {
-						finish();
-					}
-				}).show();
-			}
-		}
-		else {
+		if (RootTools.isRootAvailable() == false) {
 			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root is not available").setCallback(new MyDialogCallback() {
+
+				@Override
+				public void onMyDialogCallback(int choice) {
+					finish();
+				}
+			}).show();
+		}
+		if (RootTools.isAccessGiven() == false) {
+			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Root access denied").setCallback(new MyDialogCallback() {
+
+				@Override
+				public void onMyDialogCallback(int choice) {
+					finish();
+				}
+			}).show();
+		}
+		if (RootTools.isBusyboxAvailable() == false) {
+			new MyDialog(this, MyDialog.CHOICE_NEUTRAL).setTitle("Alert").setMessage("Busybox is not available").setCallback(new MyDialogCallback() {
 
 				@Override
 				public void onMyDialogCallback(int choice) {
