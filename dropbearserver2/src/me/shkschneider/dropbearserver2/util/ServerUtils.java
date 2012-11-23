@@ -134,11 +134,13 @@ public abstract class ServerUtils {
 			ArrayList<String> output = new ArrayList<String>();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				output.add(line);
+				if (line.endsWith("dropbear") == true) {
+					output.add(line);
+				}
 			}
 
 			// parsing
-			return (output.size() >= 2);
+			return (output.size() >= 1);
 		}
 		catch (IOException e) {
 			L.e("IOException: " + e.getMessage());

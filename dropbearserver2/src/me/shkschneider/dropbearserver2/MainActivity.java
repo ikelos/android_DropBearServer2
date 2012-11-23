@@ -126,13 +126,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		setProgressBarIndeterminateVisibility(false);
 		if (result == true) {
 			stdout("Operation succeeded");
-			switch (id) {
-			case Callback.TASK_START:
-				for (String ipAddress : ServerUtils.getIpAddresses()) {
-					stdout("IP: " + ipAddress);
-				}
-				break ;
-			}
+			check();
 			status();
 		}
 		else {
@@ -158,23 +152,26 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 
 		if (RootUtils.hasDropbear == false) {
 			mStatus = STATUS_NOT_INSTALLED;
-			stdout("Status: Not installed");
+			stdout("Server not installed");
 		}
 		else if (RootUtils.hasRootAccess == false) {
 			mStatus = STATUS_NOT_READY;
-			stdout("Status: Not ready (root access denied)");
+			stdout("Server not ready (root access denied)");
 		}
 		else if (RootUtils.hasBusybox == false) {
 			mStatus = STATUS_NOT_READY;
-			stdout("Status: Not ready (busybox missing)");
+			stdout("Server not ready (busybox missing)");
 		}
 		else if (ServerUtils.isDropbearRunning() == true) {
 			mStatus = STATUS_STARTED;
-			stdout("Status: Started (PID: " + ServerUtils.getServerLock(this) + ")");
+			stdout("Server started");
+			for (String ipAddress : ServerUtils.getIpAddresses()) {
+				stdout("IP: " + ipAddress);
+			}
 		}
 		else {
 			mStatus = STATUS_STOPPED;
-			stdout("Status: Stopped");
+			stdout("Server stopped");
 		}
 
 		mInstall.setEnabled(mStatus == STATUS_NOT_INSTALLED);
