@@ -14,8 +14,7 @@
         android:paddingRight="4dp"
         android:paddingTop="4dp"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/green_light"
+        android:textColor="@color/blue_light"
         android:textStyle="bold" />
 
     <View

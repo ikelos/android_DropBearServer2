@@ -2,10 +2,13 @@ package me.shkschneider.dropbearserver2;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -79,6 +83,8 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		mPubkeyRemove.setOnClickListener(this);
 
 		stdout("Application started");
+
+		check();
 	}
 
 	@Override
@@ -99,15 +105,6 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			return true;
 		}
 		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
-	protected void onResume() {
-		stdout("Application resumed");
-
-		check();
-
-		super.onResume();
 	}
 
 	@Override
@@ -146,10 +143,10 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			new Remover(this, this).execute();
 		}
 		else if (view == mPubkeyAdd) {
-			// ...
+			pubkeyAdd();
 		}
 		else if (view == mPubkeyRemove) {
-			// ...
+			pubkeyRemove();
 		}
 	}
 
@@ -251,5 +248,37 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			}
 		});
 		alertDialog.show();
+	}
+
+	private void pubkeyAdd() {
+		startActivity(new Intent(this, ExplorerActivity.class));
+	}
+
+	private void pubkeyRemove() {
+		final Context context = getApplicationContext();
+		final List<String> pubKeys = ServerUtils.getPublicKeys(ServerUtils.getLocalDir(this) + "/authorized_keys");
+		if (pubKeys.size() > 0) {
+			AlertDialog alertDialog = new AlertDialog.Builder(this).setSingleChoiceItems(pubKeys.toArray(new String[pubKeys.size()]), 0, null).create();
+			alertDialog.setCancelable(false);
+			alertDialog.setCanceledOnTouchOutside(false);
+			alertDialog.setIcon(android.R.drawable.ic_dialog_info);
+			alertDialog.setTitle("Add a pubkey");
+			alertDialog.setMessage(null);
+			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					ListView listView = ((AlertDialog) dialog).getListView();
+					ServerUtils.removePublicKey(pubKeys.get((int) listView.getSelectedItemId()), ServerUtils.getLocalDir(context) + "/authorized_keys");
+				}
+			});
+			alertDialog.show();
+		}
 	}
 }

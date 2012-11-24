@@ -142,7 +142,7 @@ public abstract class ServerUtils {
 
 	// WARNING: this is not threaded
 	public static List<String> getPublicKeys(String path) {
-		List<String> publicKeysList = new ArrayList<String>();
+		List<String> publicKeys = new ArrayList<String>();
 		File f = new File(path);
 		if (f.exists() == true && f.isFile() == true) {
 			try {
@@ -151,7 +151,7 @@ public abstract class ServerUtils {
 				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					publicKeysList.add(line);
+					publicKeys.add(line);
 				}
 				dis.close();
 			}
@@ -165,7 +165,7 @@ public abstract class ServerUtils {
 		else {
 			L.w("File could not be found: " + path);
 		}
-		return publicKeysList;
+		return publicKeys;
 	}
 
 	// WARNING: this is not threaded
@@ -208,20 +208,20 @@ public abstract class ServerUtils {
 				br.close();
 
 				if (!inFile.delete()) {
-					L.d("delete() failed");
+					L.w("delete() failed");
 					return false;
 				}
 				if (!tempFile.renameTo(inFile)) {
-					L.d("renameTo() failed");
+					L.w("renameTo() failed");
 					return false;
 				}
 				return true;
 			}
 			catch (FileNotFoundException e) {
-				L.d("FileNotFoundException: " + e.getMessage());
+				L.e("FileNotFoundException: " + e.getMessage());
 			}
 			catch (IOException e) {
-				L.d("IOException: " + e.getMessage());
+				L.e("IOException: " + e.getMessage());
 			}
 		}
 		return false;
