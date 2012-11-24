@@ -1,15 +1,28 @@
 package me.shkschneider.dropbearserver2;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.SwitchPreference;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class SettingsActivity extends SherlockPreferenceActivity {
+public class SettingsActivity extends SherlockPreferenceActivity implements OnPreferenceClickListener {
 
+	private SwitchPreference mAllowPassword = null;
+	private SwitchPreference mStartBoot = null;
+	private Preference mPassword = null;
+
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -20,10 +33,11 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
 		final Context context = getApplicationContext();
 
-		findPreference("allow_password").setDefaultValue(LocalPreferences.getBoolean(context,
+		mAllowPassword = (SwitchPreference) findPreference("allow_password");
+		mAllowPassword.setDefaultValue(LocalPreferences.getBoolean(context,
 				LocalPreferences.PREF_ALLOW_PASSWORD,
 				LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT));
-		findPreference("allow_password").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+		mAllowPassword.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -34,10 +48,11 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 			}
 		});
 
-		findPreference("start_boot").setDefaultValue(LocalPreferences.getBoolean(context,
+		mStartBoot = (SwitchPreference) findPreference("start_boot");
+		mStartBoot.setDefaultValue(LocalPreferences.getBoolean(context,
 				LocalPreferences.PREF_START_BOOT,
 				LocalPreferences.PREF_START_BOOT_DEFAULT));
-		findPreference("start_boot").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+		mStartBoot.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -47,6 +62,10 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 				return true;
 			}
 		});
+
+		mPassword = findPreference("password");
+		mPassword.setSummary(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
+		mPassword.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -57,5 +76,46 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onPreferenceClick(final Preference preference) {
+		final Context context = getApplicationContext();
+
+		if (preference == mPassword) {
+			final EditText editText = new EditText(this);
+			editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			editText.setHint(LocalPreferences.PREF_PASSWORD_DEFAULT);
+			editText.setText(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
+
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setCancelable(false);
+			alertDialog.setCanceledOnTouchOutside(false);
+			alertDialog.setIcon(android.R.drawable.ic_dialog_info);
+			alertDialog.setTitle("Password");
+			alertDialog.setMessage(null);
+			alertDialog.setView(editText);
+			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String password = editText.getText().toString();
+					if (password.length() == 0) {
+						password = LocalPreferences.PREF_PASSWORD_DEFAULT;
+					}
+					LocalPreferences.putString(context, LocalPreferences.PREF_PASSWORD, password);
+					preference.setSummary(password);
+				}
+			});
+			alertDialog.show();
+			return true;
+		}
+		return false;
 	}
 }

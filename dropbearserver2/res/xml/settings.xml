@@ -2,14 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <SwitchPreference
-        android:defaultValue="true"
-        android:key="allow_password"
-        android:summary="Default password id &apos;42&apos;"
-        android:title="Allow password" />
-    <SwitchPreference
         android:defaultValue="false"
         android:key="start_boot"
         android:summary="@null"
         android:title="Start on boot" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="allow_password"
+        android:summary="@null"
+        android:title="Allow password" />
+
+    <Preference
+        android:dependency="allow_password"
+        android:key="password"
+        android:summary="42"
+        android:title="Password" />
 
 </PreferenceScreen>

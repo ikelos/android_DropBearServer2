@@ -15,12 +15,10 @@ import me.shkschneider.dropbearserver2.util.ShellUtils;
 public class Starter extends AsyncTask<Void, String, Boolean> {
 
 	private static final int ID_ROOT = 0;
-	private static final int UID_SHELL = 2000;
-	private static final int GID_SDCARD_RW = 1015;
 
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
-	private boolean mStartInBackground = false;
+	private Boolean mStartInBackground = false;
 
 	private Callback<Boolean> mCallback;
 
@@ -28,7 +26,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		this(context, callback, false);
 	}
 
-	public Starter(Context context, Callback<Boolean> callback, boolean startInBackground) {
+	public Starter(Context context, Callback<Boolean> callback, Boolean startInBackground) {
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
@@ -65,7 +63,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		}
 
 		String login = "root";
-		String passwd = "42";
+		String passwd = LocalPreferences.getString(mContext, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD);
 		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
 		String hostRsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String hostDss = ServerUtils.getLocalDir(mContext) + "/host_dss";
@@ -83,13 +81,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		}
 		command = command.concat(" -r " + hostRsa + " -d " + hostDss);
 		command = command.concat(" -R " + authorizedKeys);
-		if (login.equals("root")) {
-			command = command.concat(" -U " + ID_ROOT + " -G " + ID_ROOT);
-		}
-		else {
-			// Problems writing to SDCard? See <http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/>
-			command = command.concat(" -U " + UID_SHELL + " -G " + GID_SDCARD_RW);
-		}
+		command = command.concat(" -U " + ID_ROOT + " -G " + ID_ROOT);
 		command = command.concat(" -p " + listeningPort);
 		command = command.concat(" -P " + pidFile);
 		command = command.concat(" -b " + banner);
