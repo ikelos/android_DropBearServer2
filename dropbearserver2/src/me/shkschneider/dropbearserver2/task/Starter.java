@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import me.shkschneider.dropbearserver2.LocalPreferences;
 import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
@@ -74,7 +75,12 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 
 		String command = ServerUtils.getLocalDir(mContext) + "/dropbear";
 		command = command.concat(" -A -N " + login);
-		command = command.concat(" -C " + passwd);
+		if (LocalPreferences.getBoolean(mContext, LocalPreferences.PREF_ALLOW_PASSWORD, LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT) == true) {
+			command = command.concat(" -C " + passwd);
+		}
+		else {
+			command = command.concat(" -s");
+		}
 		command = command.concat(" -r " + hostRsa + " -d " + hostDss);
 		command = command.concat(" -R " + authorizedKeys);
 		if (login.equals("root")) {
