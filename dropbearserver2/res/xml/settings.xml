@@ -3,8 +3,13 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="minimap"
+        android:key="allow_password"
         android:summary="Default password id &apos;42&apos;"
         android:title="Allow password" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="start_boot"
+        android:summary="@null"
+        android:title="Start on boot" />
 
 </PreferenceScreen>

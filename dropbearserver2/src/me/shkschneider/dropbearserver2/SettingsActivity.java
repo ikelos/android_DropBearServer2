@@ -20,15 +20,29 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
 		final Context context = getApplicationContext();
 
-		findPreference("minimap").setDefaultValue(LocalPreferences.getBoolean(context,
+		findPreference("allow_password").setDefaultValue(LocalPreferences.getBoolean(context,
 				LocalPreferences.PREF_ALLOW_PASSWORD,
 				LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT));
-		findPreference("minimap").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+		findPreference("allow_password").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				LocalPreferences.putBoolean(context,
 						LocalPreferences.PREF_ALLOW_PASSWORD,
+						(Boolean) newValue);
+				return true;
+			}
+		});
+
+		findPreference("start_boot").setDefaultValue(LocalPreferences.getBoolean(context,
+				LocalPreferences.PREF_START_BOOT,
+				LocalPreferences.PREF_START_BOOT_DEFAULT));
+		findPreference("start_boot").setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				LocalPreferences.putBoolean(context,
+						LocalPreferences.PREF_START_BOOT,
 						(Boolean) newValue);
 				return true;
 			}

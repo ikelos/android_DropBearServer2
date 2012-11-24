@@ -10,6 +10,8 @@ public class LocalPreferences {
 
 	public static final String PREF_ALLOW_PASSWORD = "allow_password";
 	public static final Boolean PREF_ALLOW_PASSWORD_DEFAULT = true;
+	public static final String PREF_START_BOOT = "Start_boot";
+	public static final Boolean PREF_START_BOOT_DEFAULT = true;
 
 	public static Boolean getBoolean(Context context, String key, Boolean defaultValue) {
 		if (context != null) {

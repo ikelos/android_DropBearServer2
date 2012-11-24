@@ -14,13 +14,15 @@ public class MainReceiver extends BroadcastReceiver {
 	public void onReceive(final Context context, Intent intent) {
 		L.d(intent.getAction());
 
-		L.d("Starter");
-		new Starter(context, new Callback<Boolean>() {
+		if (LocalPreferences.getBoolean(context, LocalPreferences.PREF_START_BOOT, LocalPreferences.PREF_START_BOOT_DEFAULT) == true) {
+			L.d("Starter");
+			new Starter(context, new Callback<Boolean>() {
 
-			@Override
-			public void onTaskComplete(int id, Boolean result) {
-				L.d("Result: " + result);
-			}
-		}, true).execute();
+				@Override
+				public void onTaskComplete(int id, Boolean result) {
+					L.d("Result: " + result);
+				}
+			}, true).execute();
+		}
 	}
 }
