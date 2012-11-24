@@ -45,6 +45,8 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 	private Button mStart = null;
 	private Button mStop = null;
 	private Button mRemove = null;
+	private Button mPubkeyAdd = null;
+	private Button mPubkeyRemove = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,12 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 
 		mRemove = (Button) findViewById(R.id.remove);
 		mRemove.setOnClickListener(this);
+
+		mPubkeyAdd = (Button) findViewById(R.id.pubkey_add);
+		mPubkeyAdd.setOnClickListener(this);
+
+		mPubkeyRemove = (Button) findViewById(R.id.pubkey_remove);
+		mPubkeyRemove.setOnClickListener(this);
 
 		stdout("Application started");
 	}
@@ -117,23 +125,31 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 
 	@Override
 	public void onClick(View view) {
-		setProgressBarIndeterminateVisibility(true);
-
 		if (view == mInstall) {
 			stdout("Installer started");
+			setProgressBarIndeterminateVisibility(true);
 			new Installer(this, this).execute();
 		}
 		else if (view == mStart) {
 			stdout("Starter started");
+			setProgressBarIndeterminateVisibility(true);
 			new Starter(this, this).execute();
 		}
 		else if (view == mStop) {
 			stdout("Stopper started");
+			setProgressBarIndeterminateVisibility(true);
 			new Stopper(this, this).execute();
 		}
 		else if (view == mRemove) {
 			stdout("Remover started");
+			setProgressBarIndeterminateVisibility(true);
 			new Remover(this, this).execute();
+		}
+		else if (view == mPubkeyAdd) {
+			// ...
+		}
+		else if (view == mPubkeyRemove) {
+			// ...
 		}
 	}
 

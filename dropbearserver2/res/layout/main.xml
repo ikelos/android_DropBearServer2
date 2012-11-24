@@ -49,6 +49,26 @@
         android:layout_width="fill_parent"
         android:text="Remove" />
 
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/pubkey_add"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:layout_width="match_parent"
+            android:text="Add pubkey" />
+
+        <Button
+            android:id="@+id/pubkey_remove"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:layout_width="match_parent"
+            android:text="Remove pubkey" />
+    </LinearLayout>
+
     <TextView
         android:layout_height="20dp"
         android:layout_width="fill_parent"
