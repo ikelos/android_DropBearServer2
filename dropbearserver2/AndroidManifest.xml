@@ -40,6 +40,9 @@
         <activity
             android:label="DropBearServer II"
             android:name=".ExplorerActivity" />
+        <activity
+            android:label="DropBearServer II"
+            android:name=".SettingsActivity" />
 
         <receiver
             android:enabled="true"

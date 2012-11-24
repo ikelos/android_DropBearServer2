@@ -100,6 +100,9 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		case android.R.id.home:
 			finish();
 			return true ;
+		case R.id.settings:
+			settings();
+			return true;
 		case R.id.about:
 			about();
 			return true;
@@ -219,6 +222,10 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 				scrollView.fullScroll(View.FOCUS_DOWN);
 			}
 		});
+	}
+
+	private void settings() {
+		startActivity(new Intent(this, SettingsActivity.class));
 	}
 
 	private void about() {
