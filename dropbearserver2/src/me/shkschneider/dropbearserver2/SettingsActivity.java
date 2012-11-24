@@ -1,15 +1,13 @@
 package me.shkschneider.dropbearserver2;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.SwitchPreference;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -18,11 +16,10 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class SettingsActivity extends SherlockPreferenceActivity implements OnPreferenceClickListener {
 
-	private SwitchPreference mAllowPassword = null;
-	private SwitchPreference mStartBoot = null;
+	private CheckBoxPreference mAllowPassword = null;
+	private CheckBoxPreference mStartBoot = null;
 	private Preference mPassword = null;
 
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 
 		final Context context = getApplicationContext();
 
-		mAllowPassword = (SwitchPreference) findPreference("allow_password");
+		mAllowPassword = (CheckBoxPreference) findPreference("allow_password");
 		mAllowPassword.setDefaultValue(LocalPreferences.getBoolean(context,
 				LocalPreferences.PREF_ALLOW_PASSWORD,
 				LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT));
@@ -48,7 +45,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 			}
 		});
 
-		mStartBoot = (SwitchPreference) findPreference("start_boot");
+		mStartBoot = (CheckBoxPreference) findPreference("start_boot");
 		mStartBoot.setDefaultValue(LocalPreferences.getBoolean(context,
 				LocalPreferences.PREF_START_BOOT,
 				LocalPreferences.PREF_START_BOOT_DEFAULT));
