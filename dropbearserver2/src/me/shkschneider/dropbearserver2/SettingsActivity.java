@@ -8,6 +8,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -84,6 +85,10 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 			editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			editText.setHint(LocalPreferences.PREF_PASSWORD_DEFAULT);
 			editText.setText(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
+			editText.requestFocus();
+
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
 
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setCancelable(false);
