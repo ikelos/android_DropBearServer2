@@ -4,16 +4,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
 import me.shkschneider.dropbearserver2.task.Callback;
@@ -22,10 +28,11 @@ import me.shkschneider.dropbearserver2.task.Installer;
 import me.shkschneider.dropbearserver2.task.Remover;
 import me.shkschneider.dropbearserver2.task.Starter;
 import me.shkschneider.dropbearserver2.task.Stopper;
+import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.RootUtils;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 
-public class MainActivity extends SherlockActivity implements OnClickListener, Callback<Boolean> {
+public class MainActivity extends SherlockActivity implements View.OnClickListener, Callback<Boolean> {
 
 	private static final int STATUS_UNKNOWN = 0;
 	private static final int STATUS_NOT_READY = 1;
@@ -34,7 +41,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 	private static final int STATUS_STOPPED = 4;
 	private int mStatus = STATUS_UNKNOWN;
 
-	private TextView mLabel = null;
 	private Button mInstall = null;
 	private Button mStart = null;
 	private Button mStop = null;
@@ -49,8 +55,8 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
-		mLabel = (TextView) findViewById(R.id.label);
-		mLabel.setText(MainApplication.APP_NAME + "\n" + "v" + MainApplication.APP_VERSION + "/" + ServerUtils.getDropbearVersion(this));
+		((TextView) findViewById(R.id.name)).setText(MainApplication.APP_NAME);
+		((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION + "/" + ServerUtils.getDropbearVersion(this));
 
 		mInstall = (Button) findViewById(R.id.install);
 		mInstall.setOnClickListener(this);
@@ -65,6 +71,26 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		mRemove.setOnClickListener(this);
 
 		stdout("Application started");
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true ;
+		case R.id.about:
+			about();
+			return true;
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 
 	@Override
@@ -180,5 +206,34 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 				scrollView.fullScroll(View.FOCUS_DOWN);
 			}
 		});
+	}
+
+	private void about() {
+		WebView webView = new WebView(this);
+		webView.getSettings().setDefaultTextEncodingName("utf-8");
+		webView.loadUrl("file:///android_asset/about.html");
+		webView.setWebViewClient(new WebViewClient() {
+
+			@Override
+			public void onReceivedError(WebView webView, int errorCode, String description, String failingUrl) {
+				L.w(description + ": " + failingUrl);
+				super.onReceivedError(webView, errorCode, description, failingUrl);
+			}
+		});
+
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setCancelable(false);
+		alertDialog.setCanceledOnTouchOutside(false);
+		alertDialog.setIcon(android.R.drawable.ic_dialog_info);
+		alertDialog.setTitle("About");
+		alertDialog.setMessage(null);
+		alertDialog.setView(webView);
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		alertDialog.show();
 	}
 }

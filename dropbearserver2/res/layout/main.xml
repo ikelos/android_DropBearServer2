@@ -7,11 +7,18 @@
 
     <TextView
         android:gravity="center_horizontal"
-        android:id="@+id/label"
+        android:id="@+id/name"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="@null"
         android:textStyle="bold" />
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/version"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@null" />
 
     <TextView
         android:layout_height="20dp"
