@@ -262,7 +262,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			alertDialog.setCancelable(false);
 			alertDialog.setCanceledOnTouchOutside(false);
 			alertDialog.setIcon(android.R.drawable.ic_dialog_info);
-			alertDialog.setTitle("Add a pubkey");
+			alertDialog.setTitle("Remove a pubkey");
 			alertDialog.setMessage(null);
 			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 
@@ -276,7 +276,6 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 				public void onClick(DialogInterface dialog, int which) {
 					ListView listView = ((AlertDialog) dialog).getListView();
 					ServerUtils.removePublicKey(pubKeys.get((int) listView.getSelectedItemId()), ServerUtils.getLocalDir(context) + "/authorized_keys");
-					stdout("Pubky removed");
 				}
 			});
 			alertDialog.show();
