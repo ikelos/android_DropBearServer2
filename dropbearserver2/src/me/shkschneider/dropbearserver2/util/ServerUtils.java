@@ -28,6 +28,8 @@ import java.util.List;
 import org.apache.http.conn.util.InetAddressUtils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public abstract class ServerUtils {
 
@@ -42,7 +44,18 @@ public abstract class ServerUtils {
 	}
 
 	// WARNING: this is not threaded
-	public static final List<String> getIpAddresses() {
+	public static Boolean isOnline(Context context) {
+		ConnectivityManager connectManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		NetworkInfo mobile = connectManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		NetworkInfo wifi   = connectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+		return ((mobile != null && mobile.getState() == NetworkInfo.State.CONNECTED) ||
+				(wifi != null && wifi.getState() == NetworkInfo.State.CONNECTED));
+	}
+
+	// WARNING: this is not threaded
+	public static final List<String> getIpAddresses(Context context) {
 		if (ipAddresses == null) {
 			ipAddresses = new ArrayList<String>();
 			try {
@@ -59,17 +72,19 @@ public abstract class ServerUtils {
 				}
 
 				// external ip address
-				Process suProcess = Runtime.getRuntime().exec("su");
-				DataOutputStream stdin = new DataOutputStream(suProcess.getOutputStream());
-				L.d("# busybox wget -qO - http://ifconfig.me/ip");
-				stdin.writeBytes("busybox wget -qO - http://ifconfig.me/ip\n");
-				stdin.flush();
-				stdin.writeBytes("exit\n");
-				stdin.flush();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
-				String line = reader.readLine();
-				if (line != null) {
-					ipAddresses.add(line);
+				if (ServerUtils.isOnline(context) == true) {
+					Process suProcess = Runtime.getRuntime().exec("su");
+					DataOutputStream stdin = new DataOutputStream(suProcess.getOutputStream());
+					L.d("# busybox wget -qO - http://ifconfig.me/ip");
+					stdin.writeBytes("busybox wget -qO - http://ifconfig.me/ip\n");
+					stdin.flush();
+					stdin.writeBytes("exit\n");
+					stdin.flush();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
+					String line = reader.readLine();
+					if (line != null) {
+						ipAddresses.add(line);
+					}
 				}
 			}
 			catch (SocketException e) {

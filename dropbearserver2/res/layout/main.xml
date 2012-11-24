@@ -25,12 +25,6 @@
         android:text="Install" />
 
     <Button
-        android:id="@+id/check"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Check" />
-
-    <Button
         android:id="@+id/start"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"

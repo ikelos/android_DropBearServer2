@@ -28,15 +28,14 @@ import me.shkschneider.dropbearserver2.util.ServerUtils;
 public class MainActivity extends SherlockActivity implements OnClickListener, Callback<Boolean> {
 
 	private static final int STATUS_UNKNOWN = 0;
-	private static final int STATUS_NOT_INSTALLED = 1;
-	private static final int STATUS_NOT_READY = 2;
+	private static final int STATUS_NOT_READY = 1;
+	private static final int STATUS_NOT_INSTALLED = 2;
 	private static final int STATUS_STARTED = 3;
 	private static final int STATUS_STOPPED = 4;
 	private int mStatus = STATUS_UNKNOWN;
 
 	private TextView mLabel = null;
 	private Button mInstall = null;
-	private Button mCheck = null;
 	private Button mStart = null;
 	private Button mStop = null;
 	private Button mRemove = null;
@@ -56,9 +55,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		mInstall = (Button) findViewById(R.id.install);
 		mInstall.setOnClickListener(this);
 
-		mCheck = (Button) findViewById(R.id.check);
-		mCheck.setOnClickListener(this);
-
 		mStart = (Button) findViewById(R.id.start);
 		mStart.setOnClickListener(this);
 
@@ -69,15 +65,13 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		mRemove.setOnClickListener(this);
 
 		stdout("Application started");
-
-		check();
 	}
 
 	@Override
 	protected void onResume() {
 		stdout("Application resumed");
 
-		status();
+		check();
 
 		super.onResume();
 	}
@@ -103,10 +97,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 			stdout("Installer started");
 			new Installer(this, this).execute();
 		}
-		else if (view == mCheck) {
-			stdout("Checker started");
-			new Checker(this, this).execute();
-		}
 		else if (view == mStart) {
 			stdout("Starter started");
 			new Starter(this, this).execute();
@@ -127,7 +117,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		if (result == true) {
 			stdout("Operation succeeded");
 			check();
-			status();
 		}
 		else {
 			stdout("Operation failed");
@@ -136,20 +125,17 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 
 	private void check() {
 		setProgressBarIndeterminateVisibility(true);
-		stdout("Checking root access");
-		if (RootUtils.checkRootAccess() == true) {
-			stdout("Checking busybox");
-			if (RootUtils.checkBusybox() == true) {
-				stdout("Checking dropbear");
-				RootUtils.checkDropbear(this);
+		new Checker(this, new Callback<Boolean>() {
+
+			@Override
+			public void onTaskComplete(int id, Boolean result) {
+				status();
+				setProgressBarIndeterminateVisibility(false);
 			}
-		}
-		setProgressBarIndeterminateVisibility(false);
+		}).execute();
 	}
 
 	private void status() {
-		setProgressBarIndeterminateVisibility(true);
-
 		if (RootUtils.hasDropbear == false) {
 			mStatus = STATUS_NOT_INSTALLED;
 			stdout("Server not installed");
@@ -165,7 +151,7 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		else if (ServerUtils.isDropbearRunning() == true) {
 			mStatus = STATUS_STARTED;
 			stdout("Server started");
-			for (String ipAddress : ServerUtils.getIpAddresses()) {
+			for (String ipAddress : ServerUtils.getIpAddresses(this)) {
 				stdout("IP: " + ipAddress);
 			}
 		}
@@ -175,12 +161,9 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		}
 
 		mInstall.setEnabled(mStatus == STATUS_NOT_INSTALLED);
-		mCheck.setEnabled(mStatus == STATUS_NOT_READY);
 		mStart.setEnabled(mStatus == STATUS_STOPPED);
 		mStop.setEnabled(mStatus == STATUS_STARTED);
 		mRemove.setEnabled(mStatus == STATUS_STOPPED);
-
-		setProgressBarIndeterminateVisibility(false);
 	}
 
 	private void stdout(String string) {
