@@ -276,6 +276,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 				public void onClick(DialogInterface dialog, int which) {
 					ListView listView = ((AlertDialog) dialog).getListView();
 					ServerUtils.removePublicKey(pubKeys.get((int) listView.getSelectedItemId()), ServerUtils.getLocalDir(context) + "/authorized_keys");
+					stdout("Pubky removed");
 				}
 			});
 			alertDialog.show();
