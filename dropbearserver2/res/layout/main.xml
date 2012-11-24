@@ -53,12 +53,21 @@
         android:layout_width="fill_parent"
         android:text="@null" />
 
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
+        android:fillViewport="true"
+        android:id="@+id/scrollView"
         android:layout_height="match_parent"
         android:layout_width="fill_parent"
         android:scrollbars="vertical"
-        android:singleLine="false"
-        android:text="@null" />
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

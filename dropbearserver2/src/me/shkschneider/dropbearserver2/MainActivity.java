@@ -2,13 +2,15 @@ package me.shkschneider.dropbearserver2;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -38,7 +40,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 	private Button mStart = null;
 	private Button mStop = null;
 	private Button mRemove = null;
-	private TextView mTextView = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,24 +68,6 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		mRemove = (Button) findViewById(R.id.remove);
 		mRemove.setOnClickListener(this);
 
-		mTextView = (TextView) findViewById(R.id.textView);
-		mTextView.setMovementMethod(new ScrollingMovementMethod());
-		mTextView.post(new Runnable() {
-
-			@Override
-			public void run() {
-				if (mTextView.getLayout() != null) {
-					final int scrollAmount = mTextView.getLayout().getLineTop(mTextView.getLineCount()) - mTextView.getHeight();
-					if (scrollAmount > 0) {
-						mTextView.scrollTo(0, scrollAmount);
-					}
-					else {
-						mTextView.scrollTo(0, 0);
-					}
-				}
-			}
-		});
-
 		stdout("Application started");
 
 		check();
@@ -97,6 +80,19 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 		status();
 
 		super.onResume();
+	}
+
+	@Override
+	protected void onStart() {
+		((ScrollView) findViewById(R.id.scrollView)).post(new Runnable() {
+
+			@Override
+			public void run() {
+				((ScrollView) findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
+
+		super.onStart();
 	}
 
 	@Override
@@ -188,7 +184,18 @@ public class MainActivity extends SherlockActivity implements OnClickListener, C
 	}
 
 	private void stdout(String string) {
-		Date date = new Date();
-		mTextView.append("[" + new SimpleDateFormat("hh:mm:ss").format(date) + "]\t" + string + "\n");
+		TextView textView = new TextView(this);
+		textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+		textView.setText("[" + new SimpleDateFormat("hh:mm:ss", Locale.getDefault()).format(new Date()) + "]\t" + string);
+		((LinearLayout) findViewById(R.id.linearLayout)).addView(textView);
+
+		final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+		scrollView.post(new Runnable() {
+
+			@Override
+			public void run() {
+				scrollView.fullScroll(View.FOCUS_DOWN);
+			}
+		});
 	}
 }
