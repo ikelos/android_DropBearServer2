@@ -63,7 +63,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		}
 
 		String login = "root";
-		String passwd = LocalPreferences.getString(mContext, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD);
+		String passwd = LocalPreferences.getString(mContext, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT);
 		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
 		String hostRsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String hostDss = ServerUtils.getLocalDir(mContext) + "/host_dss";
