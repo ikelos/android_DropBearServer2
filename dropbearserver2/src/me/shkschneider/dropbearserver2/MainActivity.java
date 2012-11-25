@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -62,7 +63,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		setContentView(R.layout.main);
 
 		((TextView) findViewById(R.id.name)).setText(MainApplication.APP_NAME);
-		((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION + "/" + ServerUtils.getDropbearVersion(this));
+		((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION);
 
 		mInstall = (Button) findViewById(R.id.install);
 		mInstall.setOnClickListener(this);
@@ -206,6 +207,8 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		mStart.setEnabled(mStatus == STATUS_STOPPED);
 		mStop.setEnabled(mStatus == STATUS_STARTED);
 		mRemove.setEnabled(mStatus == STATUS_STOPPED);
+		mPubkeyAdd.setEnabled(mStatus == STATUS_STARTED || mStatus == STATUS_STOPPED);
+		mPubkeyRemove.setEnabled(mStatus == STATUS_STARTED || mStatus == STATUS_STOPPED);
 	}
 
 	private void stdout(String string) {
@@ -283,9 +286,13 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 				public void onClick(DialogInterface dialog, int which) {
 					ListView listView = ((AlertDialog) dialog).getListView();
 					ServerUtils.removePublicKey(pubKeys.get((int) listView.getSelectedItemId()), ServerUtils.getLocalDir(context) + "/authorized_keys");
+					Toast.makeText(context, "Pubkey removed", Toast.LENGTH_SHORT).show();
 				}
 			});
 			alertDialog.show();
+		}
+		else {
+			Toast.makeText(this, "No pubkeys to remove", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

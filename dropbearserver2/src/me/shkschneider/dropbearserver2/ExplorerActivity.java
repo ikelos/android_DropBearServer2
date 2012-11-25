@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,27 +72,22 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void fill(File path)
-	{
+	private void fill(File path) {
 		File[] content = path.listFiles();
 		List<ExplorerItem> dirs = new ArrayList<ExplorerItem>();
 		List<ExplorerItem> files = new ArrayList<ExplorerItem>();
 
 		mCurrentPath.setText("SDCard: " + path.toString().replaceFirst("^" + mSdcard.toString() + "/?", "/"));
 
-		try {
-			for (File file : content) {
-				if (file.getName().startsWith(".") == false) {
-					if (file.isDirectory() == true) {
-						dirs.add(new ExplorerItem(file.getName(), file.getAbsolutePath(), true));
-					} else {
-						files.add(new ExplorerItem(file.getName(), file.getAbsolutePath(), false));
-					}
+		for (File file : content) {
+			if (file.getName().startsWith(".") == false) {
+				if (file.isDirectory() == true) {
+					dirs.add(new ExplorerItem(file.getName(), file.getAbsolutePath(), true));
+				}
+				else {
+					files.add(new ExplorerItem(file.getName(), file.getAbsolutePath(), false));
 				}
 			}
-		}
-		catch (Exception e) {
-			L.e(e.getMessage());
 		}
 
 		// After this, files should be after directories
@@ -128,6 +125,7 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 
 	private void onFileClick(ExplorerItem item) {
 		mPublicKey = null;
+
 		try {
 			FileInputStream fis = new FileInputStream(item.getPath());
 			DataInputStream dis = new DataInputStream(fis);
@@ -139,9 +137,13 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 				mPublicKey = line;
 			}
 		}
-		catch (Exception e) {
-			L.e(e.getMessage());
+		catch (FileNotFoundException e) {
+			L.e("FileNotFoundException: " + e.getMessage());
 		}
+		catch (IOException e) {
+			L.e("IOException: " + e.getMessage());
+		}
+
 		if (mPublicKey == null) {
 			Toast.makeText(this, "Error: Invalid public key", Toast.LENGTH_SHORT).show();
 		}
@@ -173,11 +175,11 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 		if (button == DialogInterface.BUTTON_POSITIVE) {
 			if (publicKeys.contains(mPublicKey) == false) {
 				ServerUtils.addPublicKey(mPublicKey, ServerUtils.getLocalDir(this) + "/authorized_keys");
-				Toast.makeText(this, "Public key successfully added", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Pubkey successfully added", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			else {
-				Toast.makeText(this, "Public key already registered", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Pubkey already registered", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -186,9 +188,9 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 
 	public class ExplorerAdapter extends ArrayAdapter<ExplorerItem> {
 
-		private Context mContext;
-		private Integer mId;
-		private List<ExplorerItem> mItems;
+		private Context mContext = null;
+		private Integer mId = 0;
+		private List<ExplorerItem> mItems = null;
 
 		public ExplorerAdapter(Context context, Integer id, List<ExplorerItem> items) {
 			super(context, id, items);
@@ -229,9 +231,9 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 
 	public class ExplorerItem implements Comparable<ExplorerItem> {
 
-		private String mName;
-		private String mPath;
-		private Boolean mIsDirectory;
+		private String mName = null;
+		private String mPath = null;
+		private Boolean mIsDirectory = null;
 
 		public ExplorerItem(String name, String path, Boolean isDirectory) {
 			mName = name;
@@ -255,10 +257,10 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 		public int compareTo(ExplorerItem item) {
 			if (mName != null) {
 				return mName.toLowerCase(Locale.getDefault()).compareTo(item.getName().toLowerCase(Locale.getDefault()));
-			} else {
+			}
+			else {
 				throw new IllegalArgumentException();
 			}
 		}
 	}
 }
-
