@@ -32,6 +32,7 @@ import android.content.Context;
 public abstract class ServerUtils {
 
 	public static String localDir = null;
+	public static Boolean dropbearRunning = false;
 	public static List<String> ipAddresses = null;
 
 	public static final String getLocalDir(Context context) {
@@ -67,6 +68,7 @@ public abstract class ServerUtils {
 
 	// WARNING: this is not threaded
 	public static final Boolean isDropbearRunning() {
+		dropbearRunning = false;
 		try {
 			Process suProcess = Runtime.getRuntime().exec("su");
 
@@ -83,14 +85,15 @@ public abstract class ServerUtils {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.endsWith("dropbear") == true) {
-					return true;
+					dropbearRunning = true;
+					return dropbearRunning;
 				}
 			}
 		}
 		catch (IOException e) {
 			L.e("IOException: " + e.getMessage());
 		}
-		return false;
+		return dropbearRunning;
 	}
 
 	// WARNING: this is not threaded

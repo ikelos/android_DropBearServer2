@@ -84,13 +84,21 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		mPubkeyRemove.setOnClickListener(this);
 
 		stdout("Application started");
+
+		check();
 	}
 
 	@Override
-	protected void onResume() {
-		check();
+	protected void onStart() {
+		((ScrollView) findViewById(R.id.scrollView)).post(new Runnable() {
 
-		super.onResume();
+			@Override
+			public void run() {
+				((ScrollView) findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
+
+		super.onStart();
 	}
 
 	@Override
@@ -117,19 +125,6 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			return true;
 		}
 		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
-	protected void onStart() {
-		((ScrollView) findViewById(R.id.scrollView)).post(new Runnable() {
-
-			@Override
-			public void run() {
-				((ScrollView) findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_DOWN);
-			}
-		});
-
-		super.onStart();
 	}
 
 	@Override
@@ -167,7 +162,9 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		setProgressBarIndeterminateVisibility(false);
 		if (result == true) {
 			stdout("Operation succeeded");
-			check();
+			if (id != TASK_CHECK) {
+				check();
+			}
 		}
 		else {
 			stdout("Operation failed");
@@ -199,10 +196,10 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			mStatus = STATUS_NOT_READY;
 			stdout("Server not ready (busybox missing)");
 		}
-		else if (ServerUtils.isDropbearRunning() == true) {
+		else if (ServerUtils.dropbearRunning == true) {
 			mStatus = STATUS_STARTED;
 			stdout("Server started");
-			for (String ipAddress : ServerUtils.getIpAddresses(this)) {
+			for (String ipAddress : ServerUtils.ipAddresses) {
 				stdout("IP: " + ipAddress);
 			}
 		}

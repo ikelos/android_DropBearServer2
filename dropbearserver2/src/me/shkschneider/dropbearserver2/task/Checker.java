@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import me.shkschneider.dropbearserver2.util.RootUtils;
+import me.shkschneider.dropbearserver2.util.ServerUtils;
 
 public class Checker extends AsyncTask<Void, String, Boolean> {
 
@@ -50,7 +51,7 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		int step = 0;
-		int steps = 3;
+		int steps = 5;
 
 		// root
 		publishProgress("" + step++, "" + steps, "Root access");
@@ -64,8 +65,11 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 		publishProgress("" + step++, "" + steps, "DropBear");
 		RootUtils.checkDropbear(mContext);
 
+		ServerUtils.isDropbearRunning();
 
-		return (RootUtils.hasRootAccess && RootUtils.hasBusybox && RootUtils.hasDropbear);
+		ServerUtils.getIpAddresses(mContext);
+
+		return (RootUtils.hasRootAccess && RootUtils.hasBusybox && RootUtils.hasDropbear && ServerUtils.dropbearRunning);
 	}
 
 	@Override
