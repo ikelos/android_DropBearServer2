@@ -27,7 +27,7 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 
 		if (mContext != null && !mStartInBackground) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Stopping server");
+			mProgressDialog.setTitle("Stopper");
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

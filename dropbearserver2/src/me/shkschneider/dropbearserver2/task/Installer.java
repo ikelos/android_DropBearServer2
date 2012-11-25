@@ -25,7 +25,7 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 
 		if (mContext != null) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Installing Dropbear");
+			mProgressDialog.setTitle("Installer");
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

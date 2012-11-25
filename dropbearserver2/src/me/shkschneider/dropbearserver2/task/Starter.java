@@ -33,7 +33,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 
 		if (mContext != null && !mStartInBackground) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Starting server");
+			mProgressDialog.setTitle("Starter");
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

@@ -19,7 +19,7 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 
 		if (mContext != null) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Checking dependencies");
+			mProgressDialog.setTitle("Checker");
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

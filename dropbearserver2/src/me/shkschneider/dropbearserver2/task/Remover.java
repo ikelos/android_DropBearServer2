@@ -21,7 +21,7 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 
 		if (mContext != null) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Removing Dropbear");
+			mProgressDialog.setTitle("Remover");
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);
