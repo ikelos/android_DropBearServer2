@@ -8,7 +8,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -81,21 +81,20 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 		final Context context = getApplicationContext();
 
 		if (preference == mPassword) {
-			final EditText editText = new EditText(this);
-			editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			editText.setHint(LocalPreferences.PREF_PASSWORD_DEFAULT);
-			editText.setText(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
-			editText.requestFocus();
-
-			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-
 			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 			alertDialog.setCancelable(false);
 			alertDialog.setCanceledOnTouchOutside(false);
 			alertDialog.setIcon(android.R.drawable.ic_dialog_info);
 			alertDialog.setTitle("Password");
 			alertDialog.setMessage(null);
+
+			final EditText editText = new EditText(this);
+			editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			editText.setHint(LocalPreferences.PREF_PASSWORD_DEFAULT);
+			editText.setText(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
+			editText.requestFocus();
+
+			alertDialog.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 			alertDialog.setView(editText);
 			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 
@@ -116,6 +115,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 				}
 			});
 			alertDialog.show();
+
 			return true;
 		}
 		return false;
