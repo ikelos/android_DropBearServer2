@@ -99,9 +99,6 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.dismiss();
 		}
 
-		if (result == true) {
-			ShellUtils.echoToFile("0" + android.os.Process.myPid(), ServerUtils.getLocalDir(mContext) + "/lock");
-		}
 		if (mCallback != null) {
 			mCallback.onTaskComplete(Callback.TASK_START, result);
 		}

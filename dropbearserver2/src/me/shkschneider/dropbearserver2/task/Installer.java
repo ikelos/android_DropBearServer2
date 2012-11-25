@@ -55,14 +55,13 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 
 	private Boolean falseWithError(String error) {
 		L.d(error);
-		//Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_LONG).show();
 		return false;
 	}
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		int step = 0;
-		int steps = 38;
+		int steps = 35;
 
 		String dropbear = ServerUtils.getLocalDir(mContext) + "/dropbear";
 		String dropbearkey = ServerUtils.getLocalDir(mContext) + "/dropbearkey";
@@ -74,7 +73,6 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 		String host_rsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String host_dss = ServerUtils.getLocalDir(mContext) + "/host_dss";
 		String authorized_keys = ServerUtils.getLocalDir(mContext) + "/authorized_keys";
-		String lock = ServerUtils.getLocalDir(mContext) + "/lock";
 
 		// dropbear
 		publishProgress("" + step++, "" + steps, "Dropbear binary");
@@ -236,20 +234,6 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 		publishProgress("" + step++, "" + steps, "Host DSS key");
 		if (ShellUtils.chown(host_dss, "0:0") == false) {
 			return falseWithError(host_dss);
-		}
-
-		// lock
-		publishProgress("" + step++, "" + steps, "Lock file");
-		if (new File(lock).exists() == true && ShellUtils.rm(lock) == false) {
-			return falseWithError(lock);
-		}
-		publishProgress("" + step++, "" + steps, "Lock file");
-		if (ShellUtils.echoToFile("0", lock) == false) {
-			return falseWithError(lock);
-		}
-		publishProgress("" + step++, "" + steps, "Lock file");
-		if (ShellUtils.chmod(lock, "644") == false) {
-			return falseWithError(lock);
 		}
 
 		// /data/local

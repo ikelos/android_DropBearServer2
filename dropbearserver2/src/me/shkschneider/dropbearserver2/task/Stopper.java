@@ -47,7 +47,6 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 
 	private Boolean falseWithError(String error) {
 		L.d(error);
-		//Toast.makeText(mContext, "Error: " + error, Toast.LENGTH_LONG).show();
 		return false;
 	}
 
@@ -55,11 +54,6 @@ public class Stopper extends AsyncTask<Void, String, Boolean> {
 	protected Boolean doInBackground(Void... params) {
 		String pidFile = ServerUtils.getLocalDir(mContext) + "/pid";
 		ShellUtils.rm(pidFile);
-
-		String lockFile = ServerUtils.getLocalDir(mContext) + "/lock";
-		if (ShellUtils.echoToFile("0", lockFile) == false) {
-			return falseWithError("echoToFile(0, " + lockFile + ")");
-		}
 
 		L.i("Killing processes");
 		if (ShellUtils.killall("dropbear") == false) {

@@ -73,11 +73,6 @@ public abstract class RootUtils {
 			L.w("banner");
 			return false;
 		}
-		file = new File(ServerUtils.getLocalDir(context) + "/lock");
-		if (file.exists() == false || file.isFile() == false) {
-			L.w("lock");
-			return false;
-		}
 
 		hasDropbear = true;
 

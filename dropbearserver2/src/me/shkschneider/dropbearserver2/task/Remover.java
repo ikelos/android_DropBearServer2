@@ -57,7 +57,7 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		int step = 0;
-		int steps = 10;
+		int steps = 9;
 
 		String dropbear = ServerUtils.getLocalDir(mContext) + "/dropbear";
 		String dropbearkey = ServerUtils.getLocalDir(mContext) + "/dropbearkey";
@@ -68,7 +68,6 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 		String host_rsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String host_dss = ServerUtils.getLocalDir(mContext) + "/host_dss";
 		String authorized_keys = ServerUtils.getLocalDir(mContext) + "/authorized_keys";
-		String lock = ServerUtils.getLocalDir(mContext) + "/lock";
 
 		// dropbear
 		publishProgress("" + step++, "" + steps, "Dropbear binary");
@@ -105,10 +104,6 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 		// host_dss
 		publishProgress("" + step++, "" + steps, "Host DSS key");
 		ShellUtils.rm(host_dss);
-
-		// lock
-		publishProgress("" + step++, "" + steps, "Lock file");
-		ShellUtils.rm(lock);
 
 		return true;
 	}
