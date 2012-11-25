@@ -12,8 +12,6 @@ import me.shkschneider.dropbearserver2.util.L;
 
 public class MainApplication extends Application {
 
-	public static Integer LOCK = 0;
-
 	public static String ANDROID_VERSION = null;
 	public static Integer ANDROID_API = 0;
 	public static String APP_PACKAGE = null;

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import me.shkschneider.dropbearserver2.MainApplication;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
 
@@ -33,11 +32,6 @@ public class Remover extends AsyncTask<Void, String, Boolean> {
 
 	@Override
 	protected void onPreExecute() {
-		if (MainApplication.LOCK > 0) {
-			// ServerStopper
-			Stopper serverStopper = new Stopper(mContext, null);
-			serverStopper.execute();
-		}
 		super.onPreExecute();
 		if (mProgressDialog != null) {
 			mProgressDialog.show();
