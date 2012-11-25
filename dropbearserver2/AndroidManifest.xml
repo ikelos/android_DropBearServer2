@@ -7,7 +7,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,6 +23,8 @@
         android:xlargeScreens="true" />
 
     <application
+        android:allowBackup="true"
+        android:allowClearUserData="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="DropBearServer II"
