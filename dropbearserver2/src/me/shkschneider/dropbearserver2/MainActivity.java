@@ -177,6 +177,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 
 			@Override
 			public void onTaskComplete(int id, Boolean result) {
+				((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION + " / " + ServerUtils.dropbearVersion);
 				status();
 				setProgressBarIndeterminateVisibility(false);
 			}

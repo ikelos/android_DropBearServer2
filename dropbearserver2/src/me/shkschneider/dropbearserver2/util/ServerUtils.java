@@ -33,6 +33,7 @@ public abstract class ServerUtils {
 
 	public static String localDir = null;
 	public static Boolean dropbearRunning = false;
+	public static String dropbearVersion = null;
 	public static List<String> ipAddresses = null;
 
 	public static final String getLocalDir(Context context) {
@@ -209,7 +210,7 @@ public abstract class ServerUtils {
 
 	// WARNING: this is not threaded
 	public static final String getDropbearVersion(Context context) {
-		String version = null;
+		dropbearVersion = null;
 		try {
 			Process suProcess = Runtime.getRuntime().exec("su");
 
@@ -227,12 +228,12 @@ public abstract class ServerUtils {
 
 			// parsing
 			if (line != null && line.matches("^Dropbear sshd v[0-9\\.]+$")) {
-				version = line.replaceFirst("^Dropbear sshd v", "");
+				dropbearVersion = line.replaceFirst("^Dropbear sshd v", "");
 			}
 		}
 		catch (IOException e) {
 			L.e("IOException: " + e.getMessage());
 		}
-		return version;
+		return dropbearVersion;
 	}
 }

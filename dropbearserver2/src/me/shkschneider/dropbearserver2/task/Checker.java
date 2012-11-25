@@ -69,6 +69,8 @@ public class Checker extends AsyncTask<Void, String, Boolean> {
 
 		ServerUtils.getIpAddresses(mContext);
 
+		ServerUtils.getDropbearVersion(mContext);
+
 		return (RootUtils.hasRootAccess && RootUtils.hasBusybox && RootUtils.hasDropbear && ServerUtils.dropbearRunning);
 	}
 
