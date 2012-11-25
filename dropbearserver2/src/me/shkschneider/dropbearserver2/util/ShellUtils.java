@@ -15,6 +15,7 @@ public abstract class ShellUtils {
 		CommandCapture commands = new CommandCapture(0, command);
 		try {
 			RootTools.getShell(true).add(commands).waitForFinish();
+			return true;
 		}
 		catch (InterruptedException e) {
 			L.e("InterruptedException: " + e.getMessage());
@@ -25,7 +26,7 @@ public abstract class ShellUtils {
 		catch (TimeoutException e) {
 			L.e("TimeoutException: " + e.getMessage());
 		}
-		return true;
+		return false;
 	}
 
 	public static final Boolean mkdir(String path) {

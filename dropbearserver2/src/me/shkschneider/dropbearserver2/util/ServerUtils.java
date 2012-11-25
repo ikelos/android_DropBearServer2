@@ -80,16 +80,12 @@ public abstract class ServerUtils {
 
 			// stdout
 			BufferedReader reader = new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
-			ArrayList<String> output = new ArrayList<String>();
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.endsWith("dropbear") == true) {
-					output.add(line);
+					return true;
 				}
 			}
-
-			// parsing
-			return (output.size() >= 1);
 		}
 		catch (IOException e) {
 			L.e("IOException: " + e.getMessage());

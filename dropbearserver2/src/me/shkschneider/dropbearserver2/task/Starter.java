@@ -58,10 +58,6 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		if (ServerUtils.isDropbearRunning() == true) {
-			ShellUtils.killall("dropbear");
-		}
-
 		String login = "root";
 		String passwd = LocalPreferences.getString(mContext, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT);
 		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
@@ -86,6 +82,7 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		command = command.concat(" -P " + pidFile);
 		command = command.concat(" -b " + banner);
 
+		L.d("Command: " + command);
 		if (ShellUtils.execute(command) == false) {
 			return falseWithError("execute(" + command + ")");
 		}

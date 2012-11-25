@@ -3,6 +3,12 @@
 
     <item
         android:icon="@null"
+        android:id="@+id/recheck"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Re-check"/>
+    <item
+        android:icon="@null"
         android:id="@+id/settings"
         android:orderInCategory="100"
         android:showAsAction="never"

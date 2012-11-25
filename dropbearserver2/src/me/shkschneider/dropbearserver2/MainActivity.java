@@ -84,8 +84,13 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		mPubkeyRemove.setOnClickListener(this);
 
 		stdout("Application started");
+	}
 
+	@Override
+	protected void onResume() {
 		check();
+
+		super.onResume();
 	}
 
 	@Override
@@ -101,6 +106,9 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		case android.R.id.home:
 			finish();
 			return true ;
+		case R.id.recheck:
+			check();
+			return true;
 		case R.id.settings:
 			settings();
 			return true;
