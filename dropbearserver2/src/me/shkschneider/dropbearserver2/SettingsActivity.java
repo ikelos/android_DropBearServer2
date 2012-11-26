@@ -3,6 +3,7 @@ package me.shkschneider.dropbearserver2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -26,6 +27,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		addPreferencesFromResource(R.xml.settings);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
