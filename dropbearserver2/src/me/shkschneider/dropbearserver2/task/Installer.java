@@ -61,7 +61,7 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		int step = 0;
-		int steps = 35;
+		int steps = 40;
 
 		String dropbear = ServerUtils.getLocalDir(mContext) + "/dropbear";
 		String dropbearkey = ServerUtils.getLocalDir(mContext) + "/dropbearkey";
@@ -69,6 +69,7 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 		String ssh = "/system/xbin/ssh";
 		String scp = "/system/xbin/scp";
 		String dbclient = "/system/xbin/dbclient";
+		String sftp_server = "system/xbin/sftp-server";
 		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
 		String host_rsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String host_dss = ServerUtils.getLocalDir(mContext) + "/host_dss";
@@ -172,6 +173,28 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 		publishProgress("" + step++, "" + steps, "DBClient binary");
 		if (ShellUtils.chmod(dbclient, "755") == false) {
 			return falseWithError(dbclient);
+		}
+
+		// sftp-server
+		publishProgress("" + step++, "" + steps, "SFTP binary");
+		if (Utils.copyRawFile(mContext, R.raw.sftp_server, tmp) == false) {
+			return falseWithError(tmp);
+		}
+		publishProgress("" + step++, "" + steps, "SFTP binary");
+		if (ShellUtils.rm(sftp_server) == false) {
+			// Ignore
+		}
+		publishProgress("" + step++, "" + steps, "SFTP binary");
+		if (ShellUtils.cp(tmp, sftp_server) == false) {
+			return falseWithError(sftp_server);
+		}
+		publishProgress("" + step++, "" + steps, "SFTP binary");
+		if (ShellUtils.rm(tmp) == false) {
+			return falseWithError(tmp);
+		}
+		publishProgress("" + step++, "" + steps, "SFTP binary");
+		if (ShellUtils.chmod(sftp_server, "755") == false) {
+			return falseWithError(sftp_server);
 		}
 
 		// Read-Only

@@ -177,7 +177,12 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 
 			@Override
 			public void onTaskComplete(int id, Boolean result) {
-				((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION + " / " + ServerUtils.dropbearVersion);
+				if (ServerUtils.dropbearVersion != null) {
+					((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION + " / " + ServerUtils.dropbearVersion);
+				}
+				else {
+					((TextView) findViewById(R.id.version)).setText("v" + MainApplication.APP_VERSION);
+				}
 				status();
 				setProgressBarIndeterminateVisibility(false);
 			}
@@ -200,6 +205,12 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		else if (ServerUtils.dropbearRunning == true) {
 			mStatus = STATUS_STARTED;
 			stdout("Server started");
+
+			stdout("$ ssh <IP>");
+			stdout("$ sshfs <IP>:/sdcard <...>");
+			stdout("$ scp <...> <IP>");
+			stdout("$ scp <IP>:<...> <...>");
+			stdout("$ sftp -s /system/xbin/sftp-server <IP>");
 			for (String ipAddress : ServerUtils.ipAddresses) {
 				stdout("IP: " + ipAddress);
 			}

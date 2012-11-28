@@ -43,6 +43,11 @@ public abstract class RootUtils {
 		hasDropbear = false;
 		File file = null;
 
+		// /system/xbin/ssh
+		// /system/xbin/scp
+		// /system/xbin/dbclient
+		// /system/xbin/sftp-server
+
 		file = new File(ServerUtils.getLocalDir(context) + "/dropbear");
 		if (file.exists() == false || file.isFile() == false) {
 			L.w("dropbear");
