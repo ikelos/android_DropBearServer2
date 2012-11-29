@@ -20,7 +20,6 @@ import java.util.Stack;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,7 +50,6 @@ public class ExplorerActivity extends SherlockListActivity implements DialogInte
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.explorer);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

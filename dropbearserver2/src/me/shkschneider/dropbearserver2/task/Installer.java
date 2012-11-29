@@ -2,9 +2,11 @@ package me.shkschneider.dropbearserver2.task;
 
 import java.io.File;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 
 import me.shkschneider.dropbearserver2.R;
 import me.shkschneider.dropbearserver2.util.L;
@@ -17,7 +19,7 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 	private Context mContext = null;
 	private ProgressDialog mProgressDialog = null;
 
-	private Callback<Boolean> mCallback;
+	private Callback<Boolean> mCallback = null;
 
 	public Installer(Context context, Callback<Boolean> callback) {
 		mContext = context;
@@ -270,12 +272,37 @@ public class Installer extends AsyncTask<Void, String, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		dismiss();
 
 		if (mCallback != null) {
 			mCallback.onTaskComplete(Callback.TASK_INSTALL, result);
+		}
+	}
+
+	@Override
+	protected void onCancelled() {
+		dismiss();
+
+		super.onCancelled();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	protected void onCancelled(Boolean result) {
+		dismiss();
+
+		super.onCancelled(result);
+	}
+
+	private void dismiss() {
+		try {
+			if (mProgressDialog != null) {
+				mProgressDialog.dismiss();
+				mProgressDialog = null;
+			}
+		}
+		catch (IllegalArgumentException e) {
+			L.w("IllegalArgumentException: " + e.getMessage());
 		}
 	}
 }
