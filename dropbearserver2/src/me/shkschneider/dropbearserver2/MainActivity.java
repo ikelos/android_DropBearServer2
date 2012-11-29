@@ -26,12 +26,12 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
-import me.shkschneider.dropbearserver2.task.Callback;
 import me.shkschneider.dropbearserver2.task.Checker;
 import me.shkschneider.dropbearserver2.task.Installer;
 import me.shkschneider.dropbearserver2.task.Remover;
 import me.shkschneider.dropbearserver2.task.Starter;
 import me.shkschneider.dropbearserver2.task.Stopper;
+import me.shkschneider.dropbearserver2.task.Task.Callback;
 import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.RootUtils;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
@@ -135,12 +135,12 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		else if (view == mStart) {
 			stdout("Starter started");
 			setProgressBarIndeterminateVisibility(true);
-			new Starter(this, this).execute();
+			new Starter(this, this, false).execute();
 		}
 		else if (view == mStop) {
 			stdout("Stopper started");
 			setProgressBarIndeterminateVisibility(true);
-			new Stopper(this, this).execute();
+			new Stopper(this, this, false).execute();
 		}
 		else if (view == mRemove) {
 			stdout("Remover started");

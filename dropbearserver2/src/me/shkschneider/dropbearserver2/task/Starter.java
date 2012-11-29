@@ -3,59 +3,23 @@
  */
 package me.shkschneider.dropbearserver2.task;
 
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Build;
 
 import me.shkschneider.dropbearserver2.LocalPreferences;
 import me.shkschneider.dropbearserver2.util.L;
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
 
-public class Starter extends AsyncTask<Void, String, Boolean> {
+public class Starter extends Task {
 
 	private static final int ID_ROOT = 0;
 
-	private Context mContext = null;
-	private ProgressDialog mProgressDialog = null;
-	private Boolean mStartInBackground = false;
-
-	private Callback<Boolean> mCallback = null;
-
-	public Starter(Context context, Callback<Boolean> callback) {
-		this(context, callback, false);
-	}
-
 	public Starter(Context context, Callback<Boolean> callback, Boolean startInBackground) {
-		mContext = context;
-		mCallback = callback;
-		mStartInBackground = startInBackground;
+		super(context, callback, startInBackground);
 
-		if (mContext != null && !mStartInBackground) {
-			mProgressDialog = new ProgressDialog(mContext);
+		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Starter");
-			mProgressDialog.setMessage("Please wait...");
-			mProgressDialog.setCancelable(false);
-			mProgressDialog.setCanceledOnTouchOutside(false);
-			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setMax(100);
-			mProgressDialog.setIcon(0);
 		}
-	}
-
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-		if (mProgressDialog != null && !mStartInBackground) {
-			mProgressDialog.show();
-		}
-	}
-
-	private Boolean falseWithError(String error) {
-		L.d(error);
-		return false;
 	}
 
 	@Override
@@ -90,41 +54,5 @@ public class Starter extends AsyncTask<Void, String, Boolean> {
 		}
 
 		return true;
-	}
-
-	@Override
-	protected void onPostExecute(Boolean result) {
-		dismiss();
-
-		if (mCallback != null) {
-			mCallback.onTaskComplete(Callback.TASK_START, result);
-		}
-	}
-
-	@Override
-	protected void onCancelled() {
-		dismiss();
-
-		super.onCancelled();
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	@Override
-	protected void onCancelled(Boolean result) {
-		dismiss();
-
-		super.onCancelled(result);
-	}
-
-	private void dismiss() {
-		try {
-			if (mProgressDialog != null) {
-				mProgressDialog.dismiss();
-				mProgressDialog = null;
-			}
-		}
-		catch (IllegalArgumentException e) {
-			L.w("IllegalArgumentException: " + e.getMessage());
-		}
 	}
 }

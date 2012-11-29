@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
-import me.shkschneider.dropbearserver2.task.Callback;
 import me.shkschneider.dropbearserver2.task.Starter;
+import me.shkschneider.dropbearserver2.task.Task.Callback;
 import me.shkschneider.dropbearserver2.util.L;
 
 public class MainReceiver extends BroadcastReceiver {
