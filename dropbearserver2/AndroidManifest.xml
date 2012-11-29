@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="internalOnly"
-    android:versionCode="141"
-    android:versionName="1.4.1"
+    android:versionCode="142"
+    android:versionName="1.4.2"
     package="me.shkschneider.dropbearserver2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
