@@ -12,20 +12,22 @@ import me.shkschneider.dropbearserver2.util.ServerUtils;
 
 public abstract class Task extends AsyncTask<Void, String, Boolean> {
 
+	protected Integer mId = 0;
 	protected Context mContext = null;
 	protected ProgressDialog mProgressDialog = null;
 	protected Callback<Boolean> mCallback = null;
 
 	private Boolean mStartInBackground = false;
 
-	public Task(Context context, Callback<Boolean> callback, Boolean startInBackground) {
+	public Task(int id, Context context, Callback<Boolean> callback, Boolean startInBackground) {
+		mId = id;
 		mContext = context;
 		mCallback = callback;
 		mStartInBackground = startInBackground;
 
 		if (mContext != null && mStartInBackground == false) {
 			mProgressDialog = new ProgressDialog(mContext);
-			mProgressDialog.setTitle("Checker");
+			mProgressDialog.setTitle(null);
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);
@@ -84,7 +86,7 @@ public abstract class Task extends AsyncTask<Void, String, Boolean> {
 		dismiss();
 
 		if (mCallback != null) {
-			mCallback.onTaskComplete(Callback.TASK_CHECK, result);
+			mCallback.onTaskComplete(mId, result);
 		}
 	}
 

@@ -12,7 +12,7 @@ import me.shkschneider.dropbearserver2.util.Utils;
 public class Installer extends Task {
 
 	public Installer(Context context, Callback<Boolean> callback) {
-		super(context, callback, false);
+		super(Callback.TASK_INSTALL, context, callback, false);
 
 		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Installer");

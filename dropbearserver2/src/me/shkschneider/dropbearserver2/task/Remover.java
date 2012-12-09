@@ -8,7 +8,7 @@ import me.shkschneider.dropbearserver2.util.ShellUtils;
 public class Remover extends Task {
 
 	public Remover(Context context, Callback<Boolean> callback) {
-		super(context, callback, false);
+		super(Callback.TASK_REMOVE, context, callback, false);
 
 		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Remover");

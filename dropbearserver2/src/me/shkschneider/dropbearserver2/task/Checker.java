@@ -8,7 +8,7 @@ import me.shkschneider.dropbearserver2.util.ServerUtils;
 public class Checker extends Task {
 
 	public Checker(Context context, Callback<Boolean> callback) {
-		super(context, callback, false);
+		super(Callback.TASK_CHECK, context, callback, false);
 
 		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Checker");

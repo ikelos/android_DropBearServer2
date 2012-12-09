@@ -9,7 +9,7 @@ import me.shkschneider.dropbearserver2.util.ShellUtils;
 public class Stopper extends Task {
 
 	public Stopper(Context context, Callback<Boolean> callback, boolean startInBackground) {
-		super(context, callback, startInBackground);
+		super(Callback.TASK_STOP, context, callback, startInBackground);
 
 		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Stopper");

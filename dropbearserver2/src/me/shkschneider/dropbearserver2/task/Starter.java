@@ -15,7 +15,7 @@ public class Starter extends Task {
 	private static final int ID_ROOT = 0;
 
 	public Starter(Context context, Callback<Boolean> callback, Boolean startInBackground) {
-		super(context, callback, startInBackground);
+		super(Callback.TASK_START, context, callback, startInBackground);
 
 		if (mProgressDialog != null) {
 			mProgressDialog.setTitle("Starter");
