@@ -21,6 +21,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 	private CheckBoxPreference mAllowPassword = null;
 	private CheckBoxPreference mStartBoot = null;
 	private Preference mPassword = null;
+	private Preference mPort = null;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -65,6 +66,10 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 		mPassword = findPreference("password");
 		mPassword.setSummary(LocalPreferences.getString(context, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT));
 		mPassword.setOnPreferenceClickListener(this);
+
+		mPort = findPreference("port");
+		mPort.setSummary(LocalPreferences.getString(context, LocalPreferences.PREF_PORT, LocalPreferences.PREF_PORT_DEFAULT));
+		mPort.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -119,6 +124,43 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 			alertDialog.show();
 
 			return true;
+		}
+		else if (preference == mPort) {
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setCancelable(false);
+			alertDialog.setCanceledOnTouchOutside(false);
+			alertDialog.setIcon(android.R.drawable.ic_dialog_info);
+			alertDialog.setTitle("Port");
+			alertDialog.setMessage(null);
+
+			final EditText editText = new EditText(this);
+			editText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			editText.setHint(LocalPreferences.PREF_PORT_DEFAULT);
+			editText.setText(LocalPreferences.getString(context, LocalPreferences.PREF_PORT, LocalPreferences.PREF_PORT_DEFAULT));
+			editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+			editText.requestFocus();
+
+			alertDialog.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+			alertDialog.setView(editText);
+			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					String port = editText.getText().toString();
+					if (port.length() == 0 || port.matches("^[0-9]+$") == false) {
+						port = LocalPreferences.PREF_PORT_DEFAULT;
+					}
+					LocalPreferences.putString(context, LocalPreferences.PREF_PORT, port);
+					preference.setSummary(port);
+				}
+			});
+			alertDialog.show();
 		}
 		return false;
 	}

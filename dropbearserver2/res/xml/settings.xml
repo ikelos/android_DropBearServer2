@@ -17,5 +17,9 @@
         android:key="password"
         android:summary="42"
         android:title="Password" />
+    <Preference
+        android:key="port"
+        android:summary="22"
+        android:title="Port" />
 
 </PreferenceScreen>
