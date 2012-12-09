@@ -30,7 +30,7 @@ public class Starter extends Task {
 		String hostRsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String hostDss = ServerUtils.getLocalDir(mContext) + "/host_dss";
 		String authorizedKeys = ServerUtils.getLocalDir(mContext) + "/authorized_keys";
-		Integer listeningPort = 22;
+		String listeningPort = LocalPreferences.getString(mContext, LocalPreferences.PREF_PORT, LocalPreferences.PREF_PORT_DEFAULT);
 		String pidFile = ServerUtils.getLocalDir(mContext) + "/pid";
 
 		String command = ServerUtils.getLocalDir(mContext) + "/dropbear";
