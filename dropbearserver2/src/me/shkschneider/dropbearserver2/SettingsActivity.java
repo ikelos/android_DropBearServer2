@@ -18,6 +18,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class SettingsActivity extends SherlockPreferenceActivity implements OnPreferenceClickListener {
 
+	private static final int PORT_MIN = 1;
+	private static final int PORT_MAX = 65535;
+
 	private CheckBoxPreference mAllowPassword = null;
 	private CheckBoxPreference mStartBoot = null;
 	private Preference mPassword = null;
@@ -154,6 +157,10 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnPr
 				public void onClick(DialogInterface dialog, int which) {
 					String port = editText.getText().toString();
 					if (port.length() == 0 || port.matches("^[0-9]+$") == false) {
+						port = LocalPreferences.PREF_PORT_DEFAULT;
+					}
+					Integer value = Integer.valueOf(port);
+					if (value < PORT_MIN || value > PORT_MAX) {
 						port = LocalPreferences.PREF_PORT_DEFAULT;
 					}
 					LocalPreferences.putString(context, LocalPreferences.PREF_PORT, port);
