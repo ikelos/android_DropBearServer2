@@ -2,3 +2,7 @@
 	path = actionbarsherlock
 	url = git://github.com/JakeWharton/ActionBarSherlock.git
 	ignore = dirty
+[submodule "numberpicker"]
+	path = numberpicker
+	url = git://github.com/shkschneider/numberpicker.git
+	ignore = dirty
