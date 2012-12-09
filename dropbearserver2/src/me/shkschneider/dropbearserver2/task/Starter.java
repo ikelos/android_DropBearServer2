@@ -38,9 +38,6 @@ public class Starter extends Task {
 		if (LocalPreferences.getBoolean(mContext, LocalPreferences.PREF_ALLOW_PASSWORD, LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT) == true) {
 			command = command.concat(" -C " + passwd);
 		}
-		else {
-			command = command.concat(" -s");
-		}
 		command = command.concat(" -r " + hostRsa + " -d " + hostDss);
 		command = command.concat(" -R " + authorizedKeys);
 		command = command.concat(" -U " + ID_ROOT + " -G " + ID_ROOT);
