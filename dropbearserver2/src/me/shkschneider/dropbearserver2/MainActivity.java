@@ -202,7 +202,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		}
 		else if (ServerUtils.dropbearRunning == true) {
 			mStatus = STATUS_STARTED;
-			stdout("Server started");
+			stdout("Server started on port " + LocalPreferences.getString(getApplicationContext(), LocalPreferences.PREF_PORT, LocalPreferences.PREF_PORT_DEFAULT));
 
 			stdout("$ ssh <IP>");
 			stdout("$ sshfs <IP>:/sdcard <...>");
