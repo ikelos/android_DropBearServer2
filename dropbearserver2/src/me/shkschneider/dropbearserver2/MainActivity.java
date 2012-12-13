@@ -171,6 +171,14 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 
 	private void check() {
 		setProgressBarIndeterminateVisibility(true);
+
+		mInstall.setEnabled(false);
+		mStart.setEnabled(false);
+		mStop.setEnabled(false);
+		mRemove.setEnabled(false);
+		mPubkeyAdd.setEnabled(false);
+		mPubkeyRemove.setEnabled(false);
+
 		new Checker(this, new Callback<Boolean>() {
 
 			@Override

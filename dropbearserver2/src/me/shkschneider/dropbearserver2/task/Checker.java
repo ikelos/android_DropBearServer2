@@ -8,35 +8,22 @@ import me.shkschneider.dropbearserver2.util.ServerUtils;
 public class Checker extends Task {
 
 	public Checker(Context context, Callback<Boolean> callback) {
-		super(Callback.TASK_CHECK, context, callback, false);
-
-		if (mProgressDialog != null) {
-			mProgressDialog.setTitle("Checker");
-		}
+		super(Callback.TASK_CHECK, context, callback, true);
 	}
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		int step = 0;
-		int steps = 5;
-
-		// root
-		publishProgress("" + step++, "" + steps, "Root access");
 		RootUtils.checkRootAccess();
-
-		// busybox
-		publishProgress("" + step++, "" + steps, "Busybox");
 		RootUtils.checkBusybox();
-
-		// dropbear
-		publishProgress("" + step++, "" + steps, "DropBear");
 		RootUtils.checkDropbear(mContext);
 
 		ServerUtils.isDropbearRunning();
-
-		ServerUtils.getIpAddresses(mContext);
-
-		ServerUtils.getDropbearVersion(mContext);
+		if (RootUtils.hasDropbear == true) {
+			ServerUtils.getDropbearVersion(mContext);
+		}
+		if (ServerUtils.dropbearRunning == true) {
+			ServerUtils.getIpAddresses(mContext);
+		}
 
 		return (RootUtils.hasRootAccess && RootUtils.hasBusybox && RootUtils.hasDropbear && ServerUtils.dropbearRunning);
 	}

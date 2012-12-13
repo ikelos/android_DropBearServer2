@@ -18,8 +18,7 @@ public class Stopper extends Task {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		String pidFile = ServerUtils.getLocalDir(mContext) + "/pid";
-		ShellUtils.rm(pidFile);
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/pid");
 
 		L.i("Killing processes");
 		if (ShellUtils.killall("dropbear") == false) {

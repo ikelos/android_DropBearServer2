@@ -17,54 +17,32 @@ public class Remover extends Task {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		int step = 0;
-		int steps = 9;
+		publishProgress("Dropbear binary");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/dropbear");
 
-		String dropbear = ServerUtils.getLocalDir(mContext) + "/dropbear";
-		String dropbearkey = ServerUtils.getLocalDir(mContext) + "/dropbearkey";
-		String ssh = "/system/xbin/ssh";
-		String scp = "/system/xbin/scp";
-		String dbclient = "/system/xbin/dbclient";
-		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
-		String host_rsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
-		String host_dss = ServerUtils.getLocalDir(mContext) + "/host_dss";
-		String authorized_keys = ServerUtils.getLocalDir(mContext) + "/authorized_keys";
+		publishProgress("Dropbearkey binary");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/dropbearkey");
 
-		// dropbear
-		publishProgress("" + step++, "" + steps, "Dropbear binary");
-		ShellUtils.rm(dropbear);
+		publishProgress("SSH binary");
+		ShellUtils.rm("/system/xbin/ssh");
 
-		// dropbearkey
-		publishProgress("" + step++, "" + steps, "Dropbearkey binary");
-		ShellUtils.rm(dropbearkey);
+		publishProgress("SCP binary");
+		ShellUtils.rm("/system/xbin/scp");
 
-		// ssh
-		publishProgress("" + step++, "" + steps, "SSH binary");
-		ShellUtils.rm(ssh);
+		publishProgress("DBClient binary");
+		ShellUtils.rm("/system/xbin/dbclient");
 
-		// scp
-		publishProgress("" + step++, "" + steps, "SCP binary");
-		ShellUtils.rm(scp);
+		publishProgress("Banner");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/banner");
 
-		// dbclient
-		publishProgress("" + step++, "" + steps, "DBClient binary");
-		ShellUtils.rm(dbclient);
+		publishProgress("Authorized keys");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/authorized_keys");
 
-		// banner
-		publishProgress("" + step++, "" + steps, "Banner");
-		ShellUtils.rm(banner);
+		publishProgress("Host RSA key");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/host_rsa");
 
-		// authorized_keys
-		publishProgress("" + step++, "" + steps, "Authorized keys");
-		ShellUtils.rm(authorized_keys);
-
-		// host_rsa
-		publishProgress("" + step++, "" + steps, "Host RSA key");
-		ShellUtils.rm(host_rsa);
-
-		// host_dss
-		publishProgress("" + step++, "" + steps, "Host DSS key");
-		ShellUtils.rm(host_dss);
+		publishProgress("Host DSS key");
+		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/host_dss");
 
 		return true;
 	}

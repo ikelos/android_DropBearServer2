@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import me.shkschneider.dropbearserver2.util.L;
-import me.shkschneider.dropbearserver2.util.RootUtils;
-import me.shkschneider.dropbearserver2.util.ServerUtils;
 
 public abstract class Task extends AsyncTask<Void, String, Boolean> {
 
@@ -31,8 +29,8 @@ public abstract class Task extends AsyncTask<Void, String, Boolean> {
 			mProgressDialog.setMessage("Please wait...");
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);
+			mProgressDialog.setIndeterminate(true);
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setMax(100);
 			mProgressDialog.setIcon(0);
 		}
 	}
@@ -40,6 +38,7 @@ public abstract class Task extends AsyncTask<Void, String, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+
 		if (mProgressDialog != null) {
 			mProgressDialog.show();
 		}
@@ -48,37 +47,10 @@ public abstract class Task extends AsyncTask<Void, String, Boolean> {
 	@Override
 	protected void onProgressUpdate(String... progress) {
 		super.onProgressUpdate(progress);
+
 		if (mProgressDialog != null) {
-			Float f = (Float.parseFloat(progress[0] + ".0") / Float.parseFloat(progress[1] + ".0") * 100);
-			mProgressDialog.setProgress(Math.round(f));
-			mProgressDialog.setMessage(progress[2]);
+			mProgressDialog.setMessage(progress[0]);
 		}
-	}
-
-	@Override
-	protected Boolean doInBackground(Void... params) {
-		int step = 0;
-		int steps = 5;
-
-		// root
-		publishProgress("" + step++, "" + steps, "Root access");
-		RootUtils.checkRootAccess();
-
-		// busybox
-		publishProgress("" + step++, "" + steps, "Busybox");
-		RootUtils.checkBusybox();
-
-		// dropbear
-		publishProgress("" + step++, "" + steps, "DropBear");
-		RootUtils.checkDropbear(mContext);
-
-		ServerUtils.isDropbearRunning();
-
-		ServerUtils.getIpAddresses(mContext);
-
-		ServerUtils.getDropbearVersion(mContext);
-
-		return (RootUtils.hasRootAccess && RootUtils.hasBusybox && RootUtils.hasDropbear && ServerUtils.dropbearRunning);
 	}
 
 	@Override

@@ -26,24 +26,28 @@
         android:text="@null" />
 
     <Button
+        android:enabled="false"
         android:id="@+id/install"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Install" />
 
     <Button
+        android:enabled="false"
         android:id="@+id/start"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Start" />
 
     <Button
+        android:enabled="false"
         android:id="@+id/stop"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:text="Stop" />
 
     <Button
+        android:enabled="false"
         android:id="@+id/remove"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -55,6 +59,7 @@
         android:orientation="horizontal" >
 
         <Button
+            android:enabled="false"
             android:id="@+id/pubkey_add"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
@@ -62,6 +67,7 @@
             android:text="Add pubkey" />
 
         <Button
+            android:enabled="false"
             android:id="@+id/pubkey_remove"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
