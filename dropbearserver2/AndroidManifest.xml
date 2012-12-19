@@ -14,9 +14,6 @@
         android:targetSdkVersion="17" />
 
     <uses-feature
-        android:name="android.hardware.screen.portrait"
-        android:required="true" />
-    <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="true" />
 
@@ -37,8 +34,7 @@
         android:theme="@style/Theme.Sherlock" >
         <activity
             android:label="DropBearServer II"
-            android:name=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

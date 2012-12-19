@@ -16,7 +16,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,19 +83,6 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		stdout("Application started");
 
 		check();
-	}
-
-	@Override
-	protected void onStart() {
-		((ScrollView) findViewById(R.id.scrollView)).post(new Runnable() {
-
-			@Override
-			public void run() {
-				((ScrollView) findViewById(R.id.scrollView)).fullScroll(ScrollView.FOCUS_DOWN);
-			}
-		});
-
-		super.onStart();
 	}
 
 	@Override
@@ -239,15 +225,6 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 		textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 		textView.setText("[" + new SimpleDateFormat("hh:mm:ss", Locale.getDefault()).format(new Date()) + "]\t" + string);
 		((LinearLayout) findViewById(R.id.linearLayout)).addView(textView);
-
-		final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
-		scrollView.post(new Runnable() {
-
-			@Override
-			public void run() {
-				scrollView.fullScroll(View.FOCUS_DOWN);
-			}
-		});
 	}
 
 	private void settings() {

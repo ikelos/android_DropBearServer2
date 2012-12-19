@@ -1,93 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:padding="20dp" >
-
-    <TextView
-        android:gravity="center_horizontal"
-        android:id="@+id/name"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@null"
-        android:textStyle="bold" />
-
-    <TextView
-        android:gravity="center_horizontal"
-        android:id="@+id/version"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@null" />
-
-    <TextView
-        android:layout_height="20dp"
-        android:layout_width="fill_parent"
-        android:text="@null" />
-
-    <Button
-        android:enabled="false"
-        android:id="@+id/install"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Install" />
-
-    <Button
-        android:enabled="false"
-        android:id="@+id/start"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Start" />
-
-    <Button
-        android:enabled="false"
-        android:id="@+id/stop"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Stop" />
-
-    <Button
-        android:enabled="false"
-        android:id="@+id/remove"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="Remove" />
+    android:scrollbars="vertical"
+    android:stackFromBottom="true"
+    android:transcriptMode="alwaysScroll" >
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:orientation="horizontal" >
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/name"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@null"
+            android:textStyle="bold" />
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:id="@+id/version"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@null" />
+
+        <TextView
+            android:layout_height="20dp"
+            android:layout_width="fill_parent"
+            android:text="@null" />
 
         <Button
             android:enabled="false"
-            android:id="@+id/pubkey_add"
+            android:id="@+id/install"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:layout_width="match_parent"
-            android:text="Add pubkey" />
+            android:layout_width="fill_parent"
+            android:text="Install" />
 
         <Button
             android:enabled="false"
-            android:id="@+id/pubkey_remove"
+            android:id="@+id/start"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:layout_width="match_parent"
-            android:text="Remove pubkey" />
-    </LinearLayout>
+            android:layout_width="fill_parent"
+            android:text="Start" />
 
-    <TextView
-        android:layout_height="20dp"
-        android:layout_width="fill_parent"
-        android:text="@null" />
+        <Button
+            android:enabled="false"
+            android:id="@+id/stop"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="Stop" />
 
-    <ScrollView
-        android:fillViewport="true"
-        android:id="@+id/scrollView"
-        android:layout_height="match_parent"
-        android:layout_width="fill_parent"
-        android:scrollbars="vertical"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll" >
+        <Button
+            android:enabled="false"
+            android:id="@+id/remove"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="Remove" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:enabled="false"
+                android:id="@+id/pubkey_add"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:layout_width="match_parent"
+                android:text="Add pubkey" />
+
+            <Button
+                android:enabled="false"
+                android:id="@+id/pubkey_remove"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:layout_width="match_parent"
+                android:text="Remove pubkey" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_height="20dp"
+            android:layout_width="fill_parent"
+            android:text="@null" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -95,6 +94,6 @@
             android:layout_width="fill_parent"
             android:orientation="vertical" >
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

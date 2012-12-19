@@ -48,7 +48,7 @@ public abstract class Task extends AsyncTask<Void, String, Boolean> {
 	protected void onProgressUpdate(String... progress) {
 		super.onProgressUpdate(progress);
 
-		if (mProgressDialog != null) {
+		if (mProgressDialog != null && mProgressDialog.isShowing() == true) {
 			mProgressDialog.setMessage(progress[0]);
 		}
 	}
