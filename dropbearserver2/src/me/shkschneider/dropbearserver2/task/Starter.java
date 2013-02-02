@@ -35,9 +35,10 @@ public class Starter extends Task {
 
 		String command = ServerUtils.getLocalDir(mContext) + "/dropbear";
 		command = command.concat(" -A -N " + login);
-		if (LocalPreferences.getBoolean(mContext, LocalPreferences.PREF_ALLOW_PASSWORD, LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT) == true) {
-			command = command.concat(" -C " + passwd);
+		if (LocalPreferences.getBoolean(mContext, LocalPreferences.PREF_ALLOW_PASSWORD, LocalPreferences.PREF_ALLOW_PASSWORD_DEFAULT) == false) {
+			command = command.concat(" -s ");
 		}
+		command = command.concat(" -C " + passwd);
 		command = command.concat(" -r " + hostRsa + " -d " + hostDss);
 		command = command.concat(" -R " + authorizedKeys);
 		command = command.concat(" -U " + ID_ROOT + " -G " + ID_ROOT);
