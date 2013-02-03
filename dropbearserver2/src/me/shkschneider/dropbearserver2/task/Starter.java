@@ -26,7 +26,7 @@ public class Starter extends Task {
 	protected Boolean doInBackground(Void... params) {
 		String login = "root";
 		String passwd = LocalPreferences.getString(mContext, LocalPreferences.PREF_PASSWORD, LocalPreferences.PREF_PASSWORD_DEFAULT);
-		String banner = ServerUtils.getLocalDir(mContext) + "/banner";
+		// String banner = ServerUtils.getLocalDir(mContext) + "/banner";
 		String hostRsa = ServerUtils.getLocalDir(mContext) + "/host_rsa";
 		String hostDss = ServerUtils.getLocalDir(mContext) + "/host_dss";
 		String authorizedKeys = ServerUtils.getLocalDir(mContext) + "/authorized_keys";
@@ -44,7 +44,7 @@ public class Starter extends Task {
 		command = command.concat(" -U " + ID_ROOT + " -G " + ID_ROOT);
 		command = command.concat(" -p " + listeningPort);
 		command = command.concat(" -P " + pidFile);
-		command = command.concat(" -b " + banner);
+		// command = command.concat(" -b " + banner);
 
 		L.d("Command: " + command);
 		if (ShellUtils.execute(command) == false) {
