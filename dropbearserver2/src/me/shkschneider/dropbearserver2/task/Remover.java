@@ -4,6 +4,7 @@ import android.content.Context;
 
 import me.shkschneider.dropbearserver2.util.ServerUtils;
 import me.shkschneider.dropbearserver2.util.ShellUtils;
+import me.shkschneider.dropbearserver2.util.Utils;
 
 public class Remover extends Task {
 
@@ -23,6 +24,14 @@ public class Remover extends Task {
 		publishProgress("Dropbearkey binary");
 		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/dropbearkey");
 
+		publishProgress("Remount Read-Write");
+		if (Utils.remountReadWrite("/system") == false) {
+			return falseWithError("/system RW");
+		}
+		if (Utils.remountReadWrite("/") == false) {
+			return falseWithError("/ RW");
+		}
+
 		publishProgress("SSH binary");
 		ShellUtils.rm("/system/xbin/ssh");
 
@@ -31,6 +40,17 @@ public class Remover extends Task {
 
 		publishProgress("DBClient binary");
 		ShellUtils.rm("/system/xbin/dbclient");
+
+		publishProgress("SFTP binary");
+		ShellUtils.rm("/usr/libexec/sftp_server");
+
+		publishProgress("Remount Read-Only");
+		if (Utils.remountReadOnly("/system") == false) {
+			return falseWithError("/system RO");
+		}
+		if (Utils.remountReadOnly("/") == false) {
+			return falseWithError("/ RO");
+		}
 
 		publishProgress("Banner");
 		ShellUtils.rm(ServerUtils.getLocalDir(mContext) + "/banner");
