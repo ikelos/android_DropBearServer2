@@ -39,8 +39,11 @@ public class Installer extends Task {
 		if (ShellUtils.rm(path) == false) {
 			// Ignore
 		}
-		if (ShellUtils.mv(tmp, path) == false) {
+		if (ShellUtils.cp(tmp, path) == false) {
 			return falseWithError(path);
+		}
+		if (ShellUtils.rm(tmp) == false) {
+			// Ignore
 		}
 		if (ShellUtils.chmod(path, "755") == false) {
 			return falseWithError(path);
