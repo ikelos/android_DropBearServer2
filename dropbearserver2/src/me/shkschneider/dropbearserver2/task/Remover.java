@@ -28,9 +28,6 @@ public class Remover extends Task {
 		if (Utils.remountReadWrite("/system") == false) {
 			return falseWithError("/system RW");
 		}
-		if (Utils.remountReadWrite("/") == false) {
-			return falseWithError("/ RW");
-		}
 
 		publishProgress("SSH binary");
 		ShellUtils.rm("/system/xbin/ssh");
@@ -42,14 +39,11 @@ public class Remover extends Task {
 		ShellUtils.rm("/system/xbin/dbclient");
 
 		publishProgress("SFTP binary");
-		ShellUtils.rm("/usr/libexec/sftp_server");
+		ShellUtils.rm("/system/xbin/sftp_server");
 
 		publishProgress("Remount Read-Only");
 		if (Utils.remountReadOnly("/system") == false) {
 			return falseWithError("/system RO");
-		}
-		if (Utils.remountReadOnly("/") == false) {
-			return falseWithError("/ RO");
 		}
 
 		publishProgress("Banner");

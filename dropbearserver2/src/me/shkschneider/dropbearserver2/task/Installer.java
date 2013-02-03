@@ -65,9 +65,6 @@ public class Installer extends Task {
 		if (Utils.remountReadWrite("/system") == false) {
 			return falseWithError("/system RW");
 		}
-		if (Utils.remountReadWrite("/") == false) {
-			return falseWithError("/ RW");
-		}
 
 		publishProgress("SSH binary");
 		copyToSystemXbin(R.raw.ssh, tmp, "/system/xbin/ssh");
@@ -79,16 +76,11 @@ public class Installer extends Task {
 		copyToSystemXbin(R.raw.dbclient, tmp, "/system/xbin/dbclient");
 
 		publishProgress("SFTP binary");
-		ShellUtils.mkdir("/usr");
-		ShellUtils.mkdir("/usr/libexec");
-		copyToSystemXbin(R.raw.sftp_server, tmp, "/usr/libexec/sftp-server");
+		copyToSystemXbin(R.raw.sftp_server, tmp, "/system/xbin/sftp-server");
 
 		publishProgress("Remount Read-Only");
 		if (Utils.remountReadOnly("/system") == false) {
 			return falseWithError("/system RO");
-		}
-		if (Utils.remountReadOnly("/") == false) {
-			return falseWithError("/ RO");
 		}
 
 		publishProgress("Banner");

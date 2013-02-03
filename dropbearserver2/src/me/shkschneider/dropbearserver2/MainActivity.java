@@ -202,7 +202,7 @@ public class MainActivity extends SherlockActivity implements View.OnClickListen
 			stdout("$ sshfs <IP>:/sdcard <...>");
 			stdout("$ scp <...> <IP>");
 			stdout("$ scp <IP>:<...> <...>");
-			stdout("$ sftp -s /system/xbin/sftp-server <IP>");
+			stdout("$ sftp <IP>");
 			for (String ipAddress : ServerUtils.ipAddresses) {
 				stdout("IP: " + ipAddress);
 			}
