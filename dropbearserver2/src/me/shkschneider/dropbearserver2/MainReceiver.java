@@ -11,7 +11,7 @@ import me.shkschneider.dropbearserver2.util.L;
 
 public class MainReceiver extends BroadcastReceiver {
 
-	private static final int PAUSE = 10;
+	private static final int PAUSE = 2;
 
 	@Override
 	public void onReceive(final Context context, Intent intent) {
