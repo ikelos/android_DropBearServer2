@@ -6,7 +6,8 @@ package me.shkschneider.dropbearserver2.util;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.stericson.RootTools.CommandCapture;
+import com.stericson.RootTools.exceptions.RootDeniedException;
+import com.stericson.RootTools.execution.CommandCapture;
 import com.stericson.RootTools.RootTools;
 
 public abstract class ShellUtils {
@@ -25,6 +26,9 @@ public abstract class ShellUtils {
 		}
 		catch (TimeoutException e) {
 			L.e("TimeoutException: " + e.getMessage());
+		} 
+		catch (RootDeniedException e) {
+			L.e("RootDeniedException: " + e.getMessage());
 		}
 		return false;
 	}
